@@ -10,7 +10,7 @@ interface Props {
   appointments: any;
 }
 
-const List = ({appointments, navigation}: Props) => {
+const ListAppointments = ({appointments, navigation}: Props) => {
   const {colors} = useTheme();
 
   const _renderItem = ({item}) => {
@@ -68,4 +68,4 @@ const List = ({appointments, navigation}: Props) => {
   );
 };
 
-export default List;
+export default ListAppointments;

@@ -19,6 +19,12 @@ export const TextStyles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '100',
   },
+  babyTitleEmpty: {
+    marginBottom: 20,
+  },
+  appointmentsTitleEmpty: {
+    marginBottom: 20,
+  },
   title: {
     fontSize: 26,
     fontWeight: 'bold',

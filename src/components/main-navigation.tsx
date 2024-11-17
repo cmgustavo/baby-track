@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/home';
 import ViewNote from '../screens/view';
 import AddNote from '../screens/add';
+import Babies from '../screens/babies';
 import AddAppointment from '../screens/addAppointment';
 import Appointments from '../screens/appointments';
 import Vaccines from '../screens/vaccines';
@@ -21,6 +22,11 @@ class MainNavigation extends React.PureComponent {
           options={{
             title: 'Baby Track',
           }}
+        />
+        <Stack.Screen
+          name="Babies"
+          component={Babies}
+          options={{title: 'Babies', headerBackTitleVisible: false}}
         />
         <Stack.Screen
           name="AddAppointment"

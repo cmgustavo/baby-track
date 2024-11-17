@@ -6,12 +6,22 @@ export const ContainerStyles = StyleSheet.create({
   },
   homeContainer: {
     flex: 1,
-    padding: 20,
+  },
+  babyContainerEmpty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    paddingHorizontal: 20,
+  },
+  appointmentsContainerEmpty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    paddingHorizontal: 20,
   },
   notesContainer: {
-    flex: 1,
-  },
-  vaccineContainer: {
     flex: 1,
   },
   noteContainer: {
@@ -22,7 +32,19 @@ export const ContainerStyles = StyleSheet.create({
   },
   welcomeContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
     padding: 20,
+  },
+  vaccinesContainer: {
+    flex: 1,
+  },
+  vaccinesListContainer: {
+    paddingLeft: 15,
+  },
+  vaccinesTitleContainer: {
+    paddingVertical: 15,
   },
   card: {
     padding: 20,

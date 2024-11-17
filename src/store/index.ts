@@ -18,11 +18,16 @@ import {
   AppointmentsReducer,
   AppointmentsReduxPersistBlackList,
 } from './appointments/appointments.reducer';
+import {
+  BabiesReducer,
+  BabiesReduxPersistBlackList,
+} from './babies/babies.reducer';
 
 const reducers = {
   APP: AppReducer,
   NOTES: NotesReducer,
   APPOINTMENTS: AppointmentsReducer,
+  BABIES: BabiesReducer,
 };
 
 const storage = new MMKV();
@@ -46,6 +51,7 @@ const reducerPersistBlackLists: Record<keyof typeof reducers, string[]> = {
   APP: AppReduxPersistBlackList,
   NOTES: NotesReduxPersistBlackList,
   APPOINTMENTS: AppointmentsReduxPersistBlackList,
+  BABIES: BabiesReduxPersistBlackList,
 };
 
 const persistConfig = {
