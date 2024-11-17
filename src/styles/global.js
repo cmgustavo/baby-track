@@ -12,4 +12,8 @@ export const GlobalStyles = StyleSheet.create({
     right: 25,
     bottom: 25,
   },
+  subTitle: {
+    marginVertical: 10,
+    paddingHorizontal: 20,
+  },
 });

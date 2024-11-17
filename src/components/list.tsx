@@ -7,10 +7,10 @@ import {ContainerStyles} from '../styles';
 
 interface Props {
   navigation: any;
-  notes: any;
+  appointments: any;
 }
 
-const List = ({notes, navigation}: Props) => {
+const List = ({appointments, navigation}: Props) => {
   const {colors} = useTheme();
 
   const _renderItem = ({item}) => {
@@ -18,13 +18,6 @@ const List = ({notes, navigation}: Props) => {
     return (
       <Card
         mode="contained"
-        onPress={() => {
-          navigation.push('ViewNote', {
-            id: itemData.id,
-            text: itemData.text,
-            date: itemData.date,
-          });
-        }}
         style={[
           ContainerStyles.noteContainer,
           {backgroundColor: colors.surfaceVariant},
@@ -32,13 +25,25 @@ const List = ({notes, navigation}: Props) => {
         <Card.Title
           title={moment(itemData.date).format('dddd, MMMM Do YYYY')}
           titleStyle={{color: colors.primary}}
-          subtitle={moment(itemData.date).fromNow()}
+          subtitle={`Age: ${itemData.age} months`}
           subtitleStyle={{color: colors.secondary}}
         />
         <Divider />
         <Card.Content style={[ContainerStyles.noteMainContent]}>
+          <Text variant="bodyLarge" style={{marginBottom: 5}}>
+            Measurements
+          </Text>
+          <Text variant="bodyMedium">Length: {itemData.length} cm</Text>
+          <Text variant="bodyMedium">Weight: {itemData.weight} g</Text>
+          <Text variant="bodyMedium" style={{marginBottom: 10}}>
+            Head: {itemData.head} cm
+          </Text>
+          <Divider />
+          <Text variant="bodyLarge" style={{marginTop: 10, marginBottom: 5}}>
+            Notes
+          </Text>
           <Text variant="bodyMedium" numberOfLines={2}>
-            {itemData.text}
+            {itemData.notes}
           </Text>
         </Card.Content>
       </Card>
@@ -57,7 +62,7 @@ const List = ({notes, navigation}: Props) => {
         {backgroundColor: colors.background},
       ]}
       renderItem={_renderItem}
-      data={Object.entries(notes).reverse()}
+      data={Object.entries(appointments).reverse()}
       keyExtractor={_keyExtractor}
     />
   );

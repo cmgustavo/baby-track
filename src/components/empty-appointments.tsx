@@ -2,7 +2,7 @@ import React from 'react';
 import {View, FlatList} from 'react-native';
 import {useTheme, Text, Divider} from 'react-native-paper';
 
-import {ContainerStyles, TextStyles, GlobalStyles} from '../styles';
+import {ContainerStyles, TextStyles} from '../styles';
 
 import {calendarVaccines} from '../constants/vaccines';
 
@@ -36,9 +36,6 @@ const Welcome = ({navigation}: Props) => {
   const _listHeader = () => {
     return (
       <View>
-        <Text variant="titleLarge" style={[{color: colors.primary}]}>
-          Welcome to Baby Tracker
-        </Text>
         <Text style={[TextStyles.subtitle, {color: colors.secondary}]}>
           Get start tracking your baby's growth and vaccine schedule.
         </Text>
@@ -53,7 +50,7 @@ const Welcome = ({navigation}: Props) => {
       <FlatList
         ListHeaderComponent={_listHeader}
         style={[
-          ContainerStyles.vaccineContainer,
+          ContainerStyles.notesContainer,
           {backgroundColor: colors.background},
         ]}
         renderItem={_renderItem}

@@ -1,6 +1,14 @@
 import {StyleSheet} from 'react-native';
 
 export const TextStyles = StyleSheet.create({
+  homeTitle: {
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  homeSubtitle: {
+    fontWeight: '300',
+    marginBottom: 20,
+  },
   noteTitle: {
     marginTop: 20,
   },
@@ -25,8 +33,7 @@ export const TextStyles = StyleSheet.create({
     marginLeft: 10,
   },
   subtitle: {
-    fontSize: 18,
-    fontWeight: '300',
+    marginTop: 10,
     marginBottom: 20,
   },
   text: {

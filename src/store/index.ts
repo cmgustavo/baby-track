@@ -14,10 +14,15 @@ import {useDispatch, useSelector, TypedUseSelectorHook} from 'react-redux';
 
 import {AppReducer, AppReduxPersistBlackList} from './app/app.reducer';
 import {NotesReducer, NotesReduxPersistBlackList} from './notes/notes.reducer';
+import {
+  AppointmentsReducer,
+  AppointmentsReduxPersistBlackList,
+} from './appointments/appointments.reducer';
 
 const reducers = {
   APP: AppReducer,
   NOTES: NotesReducer,
+  APPOINTMENTS: AppointmentsReducer,
 };
 
 const storage = new MMKV();
@@ -37,15 +42,17 @@ export const reduxStorage: Storage = {
   },
 };
 
+const reducerPersistBlackLists: Record<keyof typeof reducers, string[]> = {
+  APP: AppReduxPersistBlackList,
+  NOTES: NotesReduxPersistBlackList,
+  APPOINTMENTS: AppointmentsReduxPersistBlackList,
+};
+
 const persistConfig = {
   key: 'root',
   storage: reduxStorage,
   stateReconciler: autoMergeLevel2,
-};
-
-const reducerPersistBlackLists: Record<keyof typeof reducers, string[]> = {
-  APP: AppReduxPersistBlackList,
-  NOTES: NotesReduxPersistBlackList,
+  blacklist: Object.values(reducerPersistBlackLists).flat(),
 };
 
 const rootReducer = combineReducers(reducers);

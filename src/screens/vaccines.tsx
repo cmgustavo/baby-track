@@ -2,16 +2,13 @@ import React from 'react';
 import {View, FlatList} from 'react-native';
 import {useTheme, Text, Divider} from 'react-native-paper';
 
-import {ContainerStyles, TextStyles, GlobalStyles} from '../styles';
+import {ContainerStyles, TextStyles} from '../styles';
 
 import {calendarVaccines} from '../constants/vaccines';
 
-interface Props {
-  navigation: any;
-}
-
-const Welcome = ({navigation}: Props) => {
+const Vaccines = ({navigation}) => {
   const {colors} = useTheme();
+
   const _secondRenderItem = item => {
     const {item: itemData} = item;
     return (
@@ -37,13 +34,12 @@ const Welcome = ({navigation}: Props) => {
     return (
       <View>
         <Text variant="titleLarge" style={[{color: colors.primary}]}>
-          Welcome to Baby Tracker
+          Calendar Vaccines
         </Text>
-        <Text style={[TextStyles.subtitle, {color: colors.secondary}]}>
-          Get start tracking your baby's growth and vaccine schedule.
-        </Text>
-        <Text variant="headlineMedium" style={{marginBottom: 20}}>
-          Vaccines
+        <Text
+          variant="titleMedium"
+          style={[TextStyles.subtitle, {color: colors.secondary}]}>
+          Check the vaccines your baby needs to get.
         </Text>
       </View>
     );
@@ -63,4 +59,4 @@ const Welcome = ({navigation}: Props) => {
   );
 };
 
-export default Welcome;
+export default Vaccines;

@@ -1,65 +1,74 @@
 import React, {useLayoutEffect, useEffect} from 'react';
 import {View} from 'react-native';
-import {useTheme, FAB, ActivityIndicator, IconButton} from 'react-native-paper';
+import {useTheme, IconButton, Text} from 'react-native-paper';
 
 import {useAppDispatch, useAppSelector, RootState} from '../store';
-import {initializeNotes} from '../store/notes';
+import {initializeAppointments} from '../store/appointments';
 
-import ErrorMessage from '../components/error';
 import Welcome from '../components/welcome';
-import List from '../components/list';
-import {ContainerStyles, GlobalStyles} from '../styles';
+import {ContainerStyles, TextStyles} from '../styles';
 
 const Home = ({navigation}) => {
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
-  const notes = useAppSelector(({NOTES}: RootState) => NOTES.notes);
-  const status = useAppSelector(({NOTES}: RootState) => NOTES.status);
+  const appointments = useAppSelector(
+    ({APPOINTMENTS}: RootState) => APPOINTMENTS.appointments,
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <IconButton
-          icon="cog"
-          iconColor={colors.primary}
-          onPress={() => navigation.navigate('Preferences')}
-        />
+        <>
+          <IconButton
+            icon="cog"
+            iconColor={colors.primary}
+            onPress={() => navigation.navigate('Preferences')}
+          />
+          <IconButton
+            icon="calendar-month"
+            iconColor={colors.primary}
+            onPress={() => navigation.navigate('Appointments')}
+          />
+          <IconButton
+            icon="needle"
+            iconColor={colors.primary}
+            onPress={() => navigation.navigate('Vaccines')}
+          />
+        </>
       ),
     });
   }, [navigation, colors]);
 
   useEffect(() => {
-    dispatch(initializeNotes());
+    dispatch(initializeAppointments());
   }, []);
 
   return (
     <View
       style={[
-        ContainerStyles.globalContainer,
-        {backgroundColor: colors.background},
+        ContainerStyles.homeContainer,
+        {backgroundColor: colors.background, paddingTop: 20},
       ]}>
-      {!status ? (
-        <ActivityIndicator
-          size="large"
-          style={ContainerStyles.welcomeContainer}
-        />
-      ) : null}
-      {status === 'failed' ? (
-        <ErrorMessage
-          errorText1={'Error'}
-          errorText2={'Could not load the page'}
-        />
-      ) : null}
-      {Object.entries(notes).length == 0 ? (
+      {Object.entries(appointments).length == 0 ? (
         <Welcome navigation={navigation} />
       ) : (
         <>
-          <List notes={notes} navigation={navigation} />
-          <FAB
-            icon="plus"
-            style={GlobalStyles.fab}
-            onPress={() => navigation.navigate('AddNote')}
-          />
+          <Text
+            variant="titleLarge"
+            style={[TextStyles.homeTitle, {color: colors.primary}]}>
+            Next appointment
+          </Text>
+          <Text style={[TextStyles.homeSubtitle, {color: colors.secondary}]}>
+            You have {Object.entries(appointments).length} appointments
+          </Text>
+          <Text
+            variant="titleMedium"
+            style={[TextStyles.homeTitle, {color: colors.primary}]}>
+            Growth graph
+          </Text>
+          <Text style={[TextStyles.homeSubtitle, {color: colors.secondary}]}>
+            {/* TODO: Add growth graph */}
+          </Text>
         </>
       )}
     </View>

@@ -4,6 +4,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from '../screens/home';
 import ViewNote from '../screens/view';
 import AddNote from '../screens/add';
+import AddAppointment from '../screens/addAppointment';
+import Appointments from '../screens/appointments';
+import Vaccines from '../screens/vaccines';
 import Preferences from '../screens/preferences';
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +21,21 @@ class MainNavigation extends React.PureComponent {
           options={{
             title: 'Baby Track',
           }}
+        />
+        <Stack.Screen
+          name="AddAppointment"
+          component={AddAppointment}
+          options={{title: 'New Appointment', headerBackTitleVisible: false}}
+        />
+        <Stack.Screen
+          name="Appointments"
+          component={Appointments}
+          options={{title: 'Appointments', headerBackTitleVisible: false}}
+        />
+        <Stack.Screen
+          name="Vaccines"
+          component={Vaccines}
+          options={{title: 'Vaccines', headerBackTitleVisible: false}}
         />
         <Stack.Screen
           name="AddNote"
