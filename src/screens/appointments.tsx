@@ -10,6 +10,7 @@ import {
 
 import {useAppDispatch, useAppSelector, RootState} from '../store';
 import {initializeAppointments} from '../store/appointments';
+import {initializeBabies} from '../store/babies';
 
 import ErrorMessage from '../components/error';
 import ListAppointments from '../components/list-appointments';
@@ -21,12 +22,14 @@ const Appointments = ({navigation}) => {
   const appointments = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.appointments,
   );
+  const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
   const status = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.status,
   );
 
   useEffect(() => {
     dispatch(initializeAppointments());
+    dispatch(initializeBabies());
   }, []);
 
   return (
@@ -38,7 +41,7 @@ const Appointments = ({navigation}) => {
       {!status ? (
         <ActivityIndicator
           size="large"
-          style={ContainerStyles.welcomeContainer}
+          style={ContainerStyles.babyContainerEmpty}
         />
       ) : null}
       {status === 'failed' ? (
@@ -54,17 +57,34 @@ const Appointments = ({navigation}) => {
             style={[TextStyles.babyTitleEmpty, {color: colors.primary}]}>
             No appointment yet
           </Text>
-          <Text variant="titleMedium" style={[{color: colors.secondary}]}>
+          <Text
+            variant="titleMedium"
+            style={[TextStyles.babyTitleEmpty, {color: colors.secondary}]}>
             You have to add an appointment to start tracking the growth and
             vaccine schedule.
           </Text>
-          <Button
-            style={{marginTop: 20}}
-            onPress={() => {
-              navigation.navigate('AddAppointment');
-            }}>
-            Add Appointment
-          </Button>
+          {Object.entries(babies).length == 0 ? (
+            <>
+              <Text variant="titleSmall" style={[{color: colors.tertiary}]}>
+                Please add a baby first to add an appointment.
+              </Text>
+              <Button
+                style={{marginTop: 20}}
+                onPress={() => {
+                  navigation.navigate('AddBaby');
+                }}>
+                Add Baby
+              </Button>
+            </>
+          ) : (
+            <Button
+              style={{marginTop: 20}}
+              onPress={() => {
+                navigation.navigate('AddAppointment');
+              }}>
+              Add Appointment
+            </Button>
+          )}
         </View>
       ) : (
         <>

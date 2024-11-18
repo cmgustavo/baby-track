@@ -19,7 +19,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
       <Card
         mode="contained"
         style={[
-          ContainerStyles.noteContainer,
+          ContainerStyles.appointmentCardsContent,
           {backgroundColor: colors.surfaceVariant},
         ]}>
         <Card.Title
@@ -29,7 +29,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
           subtitleStyle={{color: colors.secondary}}
         />
         <Divider />
-        <Card.Content style={[ContainerStyles.noteMainContent]}>
+        <Card.Content style={[ContainerStyles.appointmentContent]}>
           <Text variant="bodyLarge" style={{marginBottom: 5}}>
             Measurements
           </Text>
@@ -58,7 +58,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
   return (
     <FlatList
       style={[
-        ContainerStyles.notesContainer,
+        ContainerStyles.appointmentContainer,
         {backgroundColor: colors.background},
       ]}
       renderItem={_renderItem}

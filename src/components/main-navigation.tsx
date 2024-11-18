@@ -5,6 +5,7 @@ import Home from '../screens/home';
 import ViewNote from '../screens/view';
 import AddNote from '../screens/add';
 import Babies from '../screens/babies';
+import AddBaby from '../screens/addBaby';
 import AddAppointment from '../screens/addAppointment';
 import Appointments from '../screens/appointments';
 import Vaccines from '../screens/vaccines';
@@ -27,6 +28,11 @@ class MainNavigation extends React.PureComponent {
           name="Babies"
           component={Babies}
           options={{title: 'Babies', headerBackTitleVisible: false}}
+        />
+        <Stack.Screen
+          name="AddBaby"
+          component={AddBaby}
+          options={{title: 'Add Baby', headerBackTitleVisible: false}}
         />
         <Stack.Screen
           name="AddAppointment"

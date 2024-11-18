@@ -4,8 +4,15 @@ export const ContainerStyles = StyleSheet.create({
   globalContainer: {
     flex: 1,
   },
-  homeContainer: {
+  chartContainer: {
     flex: 1,
+  },
+  chartItems: {
+    marginVertical: 15,
+    borderRadius: 16,
+  },
+  homeContainer: {
+    padding: 15,
   },
   babyContainerEmpty: {
     flex: 1,
@@ -14,6 +21,16 @@ export const ContainerStyles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 20,
   },
+  babyContainer: {
+    padding: 20,
+  },
+  babyContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  babyCardsContent: {
+    marginBottom: 20,
+  },
   appointmentsContainerEmpty: {
     flex: 1,
     justifyContent: 'center',
@@ -21,11 +38,18 @@ export const ContainerStyles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 20,
   },
+  appointmentContainer: {
+    padding: 20,
+  },
+  appointmentContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  appointmentCardsContent: {
+    marginBottom: 20,
+  },
   notesContainer: {
     flex: 1,
-  },
-  noteContainer: {
-    margin: 20,
   },
   noteMainContent: {
     marginVertical: 10,

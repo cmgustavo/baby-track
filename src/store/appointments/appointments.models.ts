@@ -10,4 +10,5 @@ export type AppointmentObj = {
   length: number;
   weight: number;
   head: number;
+  babyId: number;
 };

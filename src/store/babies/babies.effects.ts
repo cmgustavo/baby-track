@@ -6,7 +6,6 @@ export const initializeBabies =
     const {BABIES} = getState();
     try {
       const babies = BABIES.babies;
-      console.log('[babies.effects.ts:8] BABIES', babies); /* TODO */
       dispatch(babiesSuccess(babies));
     } catch (error: any) {
       dispatch(babiesFailed());

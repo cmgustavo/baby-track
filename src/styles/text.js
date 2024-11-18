@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 export const TextStyles = StyleSheet.create({
   homeTitle: {
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   homeSubtitle: {
     fontWeight: '300',
