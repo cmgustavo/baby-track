@@ -33,20 +33,8 @@ const ListVaccines = ({navigation}: Props) => {
       </View>
     );
   };
-  const _listHeader = () => {
-    return (
-      <View style={[ContainerStyles.vaccinesTitleContainer]}>
-        <Text
-          variant="titleLarge"
-          style={{marginBottom: 20, color: colors.primary}}>
-          Vaccines Calendar
-        </Text>
-      </View>
-    );
-  };
   return (
     <FlatList
-      ListHeaderComponent={_listHeader}
       style={[
         ContainerStyles.vaccinesListContainer,
         {backgroundColor: colors.background},

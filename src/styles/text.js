@@ -4,10 +4,21 @@ export const TextStyles = StyleSheet.create({
   homeTitle: {
     fontWeight: 'bold',
     marginBottom: 10,
+    fontSize: 26,
+    textAlign: 'center',
   },
   homeSubtitle: {
     fontWeight: '300',
     marginBottom: 20,
+    textAlign: 'center',
+  },
+  contentTitle: {
+    marginBottom: 15,
+    fontSize: 18,
+  },
+  contentSubtitle: {
+    fontWeight: '400',
+    marginBottom: 10,
   },
   noteTitle: {
     marginTop: 20,

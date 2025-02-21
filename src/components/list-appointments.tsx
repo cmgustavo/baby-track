@@ -1,7 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import {FlatList} from 'react-native';
-import {useTheme, Card, Text, Divider} from 'react-native-paper';
+import {useTheme, Card, Text, Divider, Button} from 'react-native-paper';
+import {useAppDispatch} from '../store';
+import {deleteAppointment} from '../store/appointments';
 
 import {ContainerStyles} from '../styles';
 
@@ -12,7 +14,11 @@ interface Props {
 
 const ListAppointments = ({appointments, navigation}: Props) => {
   const {colors} = useTheme();
-
+  const dispatch = useAppDispatch();
+  const _deleteAppointment = (id: string) => {
+    dispatch(deleteAppointment(id));
+    navigation.goBack();
+  };
   const _renderItem = ({item}) => {
     const [_, itemData] = item;
     return (
@@ -46,6 +52,14 @@ const ListAppointments = ({appointments, navigation}: Props) => {
             {itemData.notes}
           </Text>
         </Card.Content>
+        <Card.Actions>
+          <Button
+            icon={'trash-can-outline'}
+            mode="contained"
+            onPress={() => _deleteAppointment(itemData.id)}>
+            Delete
+          </Button>
+        </Card.Actions>
       </Card>
     );
   };

@@ -6,6 +6,7 @@ export type BabyObj = {
   id: number;
   name: string;
   birth: Date;
+  gender: string;
   length: number;
   weight: number;
   place: string;

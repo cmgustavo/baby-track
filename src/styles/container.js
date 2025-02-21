@@ -46,7 +46,7 @@ export const ContainerStyles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   appointmentCardsContent: {
-    marginBottom: 20,
+    marginBottom: 30,
   },
   notesContainer: {
     flex: 1,

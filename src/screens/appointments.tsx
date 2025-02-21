@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Text,
   Button,
+  Appbar,
 } from 'react-native-paper';
 
 import {useAppDispatch, useAppSelector, RootState} from '../store';
@@ -15,10 +16,13 @@ import {initializeBabies} from '../store/babies';
 import ErrorMessage from '../components/error';
 import ListAppointments from '../components/list-appointments';
 import {ContainerStyles, GlobalStyles, TextStyles} from '../styles';
+import CombinedDarkTheme from '../themes/dark';
+import CombinedDefaultTheme from '../themes/light';
 
 const Appointments = ({navigation}) => {
   const dispatch = useAppDispatch();
-  const {colors} = useTheme();
+  const {colors, dark} = useTheme();
+  const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
   const appointments = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.appointments,
   );
@@ -33,73 +37,82 @@ const Appointments = ({navigation}) => {
   }, []);
 
   return (
-    <View
-      style={[
-        ContainerStyles.globalContainer,
-        {backgroundColor: colors.background},
-      ]}>
-      {!status ? (
-        <ActivityIndicator
-          size="large"
-          style={ContainerStyles.babyContainerEmpty}
-        />
-      ) : null}
-      {status === 'failed' ? (
-        <ErrorMessage
-          errorText1={'Error'}
-          errorText2={'Could not load the page'}
-        />
-      ) : null}
-      {Object.entries(appointments).length == 0 ? (
-        <View style={[ContainerStyles.babyContainerEmpty]}>
-          <Text
-            variant="titleLarge"
-            style={[TextStyles.babyTitleEmpty, {color: colors.primary}]}>
-            No appointment yet
-          </Text>
-          <Text
-            variant="titleMedium"
-            style={[TextStyles.babyTitleEmpty, {color: colors.secondary}]}>
-            You have to add an appointment to start tracking the growth and
-            vaccine schedule.
-          </Text>
-          {Object.entries(babies).length == 0 ? (
-            <>
-              <Text variant="titleSmall" style={[{color: colors.tertiary}]}>
-                Please add a baby first to add an appointment.
-              </Text>
+    <>
+      <Appbar.Header
+        theme={appTheme}
+        mode={'small'}
+        style={{backgroundColor: appTheme.colors.primary}}>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Appointments" />
+      </Appbar.Header>
+      <View
+        style={[
+          ContainerStyles.globalContainer,
+          {backgroundColor: colors.background},
+        ]}>
+        {!status ? (
+          <ActivityIndicator
+            size="large"
+            style={ContainerStyles.babyContainerEmpty}
+          />
+        ) : null}
+        {status === 'failed' ? (
+          <ErrorMessage
+            errorText1={'Error'}
+            errorText2={'Could not load the page'}
+          />
+        ) : null}
+        {Object.entries(appointments).length == 0 ? (
+          <View style={[ContainerStyles.babyContainerEmpty]}>
+            <Text
+              variant="titleLarge"
+              style={[TextStyles.babyTitleEmpty, {color: colors.primary}]}>
+              No appointment yet
+            </Text>
+            <Text
+              variant="titleMedium"
+              style={[TextStyles.babyTitleEmpty, {color: colors.secondary}]}>
+              You have to add an appointment to start tracking the growth and
+              vaccine schedule.
+            </Text>
+            {Object.entries(babies).length == 0 ? (
+              <>
+                <Text variant="titleSmall" style={[{color: colors.tertiary}]}>
+                  Please add a baby first to add an appointment.
+                </Text>
+                <Button
+                  style={{marginTop: 20}}
+                  onPress={() => {
+                    navigation.navigate('AddBaby');
+                  }}>
+                  Add Baby
+                </Button>
+              </>
+            ) : (
               <Button
                 style={{marginTop: 20}}
                 onPress={() => {
-                  navigation.navigate('AddBaby');
+                  navigation.navigate('AddAppointment');
                 }}>
-                Add Baby
+                Add Appointment
               </Button>
-            </>
-          ) : (
-            <Button
-              style={{marginTop: 20}}
-              onPress={() => {
-                navigation.navigate('AddAppointment');
-              }}>
-              Add Appointment
-            </Button>
-          )}
-        </View>
-      ) : (
-        <>
-          <ListAppointments
-            appointments={appointments}
-            navigation={navigation}
-          />
-          <FAB
-            icon="plus"
-            style={GlobalStyles.fab}
-            onPress={() => navigation.navigate('AddAppointment')}
-          />
-        </>
-      )}
-    </View>
+            )}
+          </View>
+        ) : (
+          <>
+            <ListAppointments
+              appointments={appointments}
+              navigation={navigation}
+            />
+            <FAB
+              icon="plus"
+              style={GlobalStyles.fab}
+              onPress={() => navigation.navigate('AddAppointment')}
+            />
+          </>
+        )}
+      </View>
+    </>
   );
 };
 

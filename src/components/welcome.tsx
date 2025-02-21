@@ -12,17 +12,16 @@ const Welcome = ({navigation}: Props) => {
   const {colors} = useTheme();
   return (
     <View style={ContainerStyles.welcomeContainer}>
-      <Text variant="titleLarge" style={[{color: colors.primary}]}>
-        Welcome to Baby Tracker
-      </Text>
+      <Text variant="titleLarge">Welcome to Baby Tracker</Text>
       <Text style={[TextStyles.subtitle, {color: colors.secondary}]}>
         Get start tracking your baby's growth and vaccine schedule.
       </Text>
       <Button
+        mode="contained"
         onPress={() => {
           navigation.navigate('AddBaby');
         }}>
-        Add Baby
+        Add a new baby
       </Button>
     </View>
   );

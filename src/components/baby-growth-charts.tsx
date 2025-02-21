@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScrollView, Dimensions} from 'react-native';
 import {LineChart} from 'react-native-chart-kit';
-import {useTheme, Text} from 'react-native-paper';
+import {useTheme, Text, Divider} from 'react-native-paper';
 
 import {ContainerStyles} from '../styles';
 
@@ -11,13 +11,25 @@ interface Props {
 }
 
 const BabyGrowthCharts = ({data, navigation}: Props) => {
-  const {colors} = useTheme();
+  const {colors, dark} = useTheme();
   const screenWidth = Dimensions.get('window').width;
+
+  const chartConfig = {
+    backgroundGradientFrom: dark ? colors.shadow : colors.background,
+    backgroundGradientTo: dark ? colors.scrim : colors.surface,
+    decimalPlaces: 1,
+    color: () => colors.secondary,
+    labelColor: () => colors.tertiary,
+    style: {
+      borderRadius: 16,
+    },
+    propsForDots: {},
+  };
 
   return (
     <ScrollView style={ContainerStyles.chartContainer}>
-      <Text variant="titleSmall" style={{color: colors.primary}}>
-        Length vs Age
+      <Text variant="titleMedium" style={{color: colors.primary}}>
+        Length (centimeters) vs Age (months)
       </Text>
       <LineChart
         data={{
@@ -31,19 +43,12 @@ const BabyGrowthCharts = ({data, navigation}: Props) => {
         }}
         width={screenWidth - 32} // Adjust for padding
         height={220}
-        chartConfig={{
-          backgroundColor: '#ffffff',
-          backgroundGradientFrom: '#f7f7f7',
-          backgroundGradientTo: '#e8e8e8',
-          decimalPlaces: 1,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        }}
+        chartConfig={chartConfig}
         style={ContainerStyles.chartItems}
       />
-
-      <Text variant="titleSmall" style={{color: colors.primary}}>
-        Weight vs Age
+      <Divider style={{marginBottom: 20}} />
+      <Text variant="titleMedium" style={{color: colors.primary}}>
+        Weight (grams) vs Age (months)
       </Text>
       <LineChart
         data={{
@@ -57,14 +62,7 @@ const BabyGrowthCharts = ({data, navigation}: Props) => {
         }}
         width={screenWidth - 32}
         height={220}
-        chartConfig={{
-          backgroundColor: '#ffffff',
-          backgroundGradientFrom: '#f7f7f7',
-          backgroundGradientTo: '#e8e8e8',
-          decimalPlaces: 1,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        }}
+        chartConfig={chartConfig}
         style={ContainerStyles.chartItems}
       />
     </ScrollView>
