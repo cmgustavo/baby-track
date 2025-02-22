@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {
   useTheme,
@@ -9,9 +9,7 @@ import {
   Appbar,
 } from 'react-native-paper';
 
-import {useAppDispatch, useAppSelector, RootState} from '../store';
-import {initializeAppointments} from '../store/appointments';
-import {initializeBabies} from '../store/babies';
+import {useAppSelector, RootState} from '../store';
 
 import ErrorMessage from '../components/error';
 import ListAppointments from '../components/list-appointments';
@@ -20,21 +18,22 @@ import CombinedDarkTheme from '../themes/dark';
 import CombinedDefaultTheme from '../themes/light';
 
 const Appointments = ({navigation}) => {
-  const dispatch = useAppDispatch();
   const {colors, dark} = useTheme();
   const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
-  const appointments = useAppSelector(
+  const _appointments = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.appointments,
   );
-  const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
+  const _babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
   const status = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.status,
   );
+  const [appointments, setAppointments] = useState(_appointments);
+  const [babies, setBabies] = useState(_babies);
 
   useEffect(() => {
-    dispatch(initializeAppointments());
-    dispatch(initializeBabies());
-  }, []);
+    setAppointments(_appointments);
+    setBabies(_babies);
+  }, [_appointments, _babies]);
 
   return (
     <>

@@ -16,10 +16,11 @@ export const appointmentsFailed = (): AppointmentsActionType => ({
 });
 
 export const createAppointment = (
+  id: string,
   appointment: AppointmentObj,
 ): AppointmentsActionType => ({
   type: AppointmentActionTypes.APPOINTMENT_CREATE,
-  payload: appointment,
+  payload: {id: id, appointment: appointment},
 });
 
 export const deleteAppointment = (id: string): AppointmentsActionType => ({
@@ -28,8 +29,9 @@ export const deleteAppointment = (id: string): AppointmentsActionType => ({
 });
 
 export const updateAppointment = (
+  id: string,
   appointment: AppointmentObj,
 ): AppointmentsActionType => ({
   type: AppointmentActionTypes.APPOINTMENT_UPDATE,
-  payload: appointment,
+  payload: {id: id, appointment: appointment},
 });

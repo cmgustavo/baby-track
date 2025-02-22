@@ -11,9 +11,7 @@ import {
   Appbar,
 } from 'react-native-paper';
 
-import {useAppDispatch, useAppSelector, RootState} from '../store';
-import {initializeAppointments} from '../store/appointments';
-import {initializeBabies} from '../store/babies';
+import {useAppSelector, RootState} from '../store';
 import {BabyObj} from '../store/babies/babies.models';
 
 import Welcome from '../components/welcome';
@@ -23,16 +21,17 @@ import CombinedDarkTheme from '../themes/dark';
 import CombinedDefaultTheme from '../themes/light';
 
 const Home = ({navigation}) => {
-  const dispatch = useAppDispatch();
   const {colors, dark} = useTheme();
   const [showMenu, setShowMenu] = useState(false);
   const MAIN_MENU = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
   const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
+  const [baby, setBaby] = useState<BabyObj>(Object.values(babies)[0]);
   const appointments = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.appointments,
   );
-  const hasAppointments = Object.entries(appointments).length > 0;
-  const [baby, setBaby] = useState<BabyObj>();
+  const [hasAppointments, setHasAppointments] = useState<boolean>(
+    Object.keys(appointments).length > 0,
+  );
 
   const formatData = data => {
     const entries = Object.values(data); // Convert object to array
@@ -51,12 +50,11 @@ const Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    dispatch(initializeAppointments());
-    dispatch(initializeBabies());
     if (Object.entries(babies).length > 0) {
       setBaby(Object.values(babies)[0]);
+      setHasAppointments(Object.keys(appointments).length > 0);
     }
-  }, [babies]);
+  }, [babies, appointments]);
 
   const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
   return (

@@ -35,7 +35,7 @@ export const BabiesReducer = (
         ...state,
         babies: {
           ...state.babies,
-          [action.payload.id]: action.payload,
+          [action.payload.id]: action.payload.baby,
         },
       };
 
@@ -56,7 +56,7 @@ export const BabiesReducer = (
         ...state,
         babies: {
           ...state.babies,
-          [action.payload.id]: action.payload,
+          [action.payload.id]: action.payload.baby,
         },
       };
 

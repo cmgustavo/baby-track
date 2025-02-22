@@ -3,12 +3,11 @@ export type AppointmentsObj = {
 };
 
 export type AppointmentObj = {
-  id: string;
   notes: string;
   date: Date;
   age: number;
   length: number;
   weight: number;
   head: number;
-  babyId: number;
+  babyId: string;
 };

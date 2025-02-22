@@ -14,7 +14,7 @@ import ErrorMessage from '../components/error.tsx';
 const AddBaby = ({route, navigation}) => {
   const dispatch = useAppDispatch();
   const {
-    id: idBaby,
+    id,
     name,
     gender,
     birth,
@@ -23,10 +23,11 @@ const AddBaby = ({route, navigation}) => {
     place,
     mother,
     father,
-    peditrician,
+    pediatrician,
     notes,
     context,
-  } = route.params;
+  } = route.params || ({} as any);
+  console.log(route.params);
   const {dark} = useTheme();
   const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
   const [textAreaValue, setTextAreaValue] = useState<string>(
@@ -35,9 +36,7 @@ const AddBaby = ({route, navigation}) => {
   const [birthValue, setBirthValue] = useState<Date>(
     birth ? new Date(birth) : new Date(),
   );
-  const [idValue, setIdValue] = useState<string>(
-    idBaby ? idBaby.toString() : '',
-  );
+  const [idValue, setIdValue] = useState<string>(id || '');
   const [nameValue, setNameValue] = useState<string>(name ? name : '');
   const [genderValue, setGenderValue] = useState<string>(
     gender ? gender : 'Male',
@@ -53,14 +52,14 @@ const AddBaby = ({route, navigation}) => {
   const [motherValue, setMotherValue] = useState<string>(mother ? mother : '');
   const [fatherValue, setFatherValue] = useState<string>(father ? father : '');
   const [pediatricianValue, setPediatricianValue] = useState<string>(
-    peditrician ? peditrician : '',
+    pediatrician ? pediatrician : '',
   );
   const [showError, setShowError] = useState(false);
 
   const IS_DEV = __DEV__;
 
   const _addBaby = (
-    _id: number,
+    _id: string,
     _name: string,
     _gender: string,
     _birth: Date,
@@ -72,24 +71,13 @@ const AddBaby = ({route, navigation}) => {
     _pediatrician: string,
     _notes: string,
   ) => {
-    if (
-      !_name ||
-      !_gender ||
-      !_birth ||
-      !_length ||
-      !_weight ||
-      !_place ||
-      !_mother ||
-      !_father ||
-      !_pediatrician
-    ) {
+    if (!_name || !_gender || !_birth || !_length || !_weight) {
       setShowError(true);
       return;
     }
-    if (context === 'edit' && idBaby) {
+    if (context === 'edit') {
       dispatch(
-        updateBaby({
-          id: _id,
+        updateBaby(_id, {
           name: _name,
           gender: _gender,
           birth: _birth,
@@ -104,8 +92,7 @@ const AddBaby = ({route, navigation}) => {
       );
     } else {
       dispatch(
-        createBaby({
-          id: _id,
+        createBaby(_id, {
           name: _name,
           gender: _gender,
           birth: _birth,
@@ -119,6 +106,7 @@ const AddBaby = ({route, navigation}) => {
         }),
       );
     }
+    navigation.goBack();
   };
 
   return (
@@ -262,7 +250,7 @@ const AddBaby = ({route, navigation}) => {
             disabled={!idValue}
             onPress={() => {
               _addBaby(
-                Number(idValue),
+                idValue,
                 nameValue,
                 genderValue,
                 birthValue,
@@ -274,7 +262,6 @@ const AddBaby = ({route, navigation}) => {
                 pediatricianValue,
                 textAreaValue,
               );
-              navigation.goBack();
             }}>
             Save
           </Button>

@@ -21,7 +21,10 @@ interface BabyFailed {
 
 interface CreateBaby {
   type: typeof BabyActionTypes.BABY_CREATE;
-  payload: BabyObj;
+  payload: {
+    id: string;
+    baby: BabyObj;
+  };
 }
 
 interface DeleteBaby {
@@ -31,7 +34,7 @@ interface DeleteBaby {
 
 interface UpdateBaby {
   type: typeof BabyActionTypes.BABY_UPDATE;
-  payload: BabyObj;
+  payload: {id: string; baby: BabyObj};
 }
 
 export type BabiesActionType =

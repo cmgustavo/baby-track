@@ -26,13 +26,13 @@ const AddAppointment = ({route, navigation}) => {
     weight,
     head,
     babyId,
-  } = route.params;
+  } = route.params || ({} as any);
   const dispatch = useAppDispatch();
   const {dark} = useTheme();
   const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
   const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
-  const [babyIdValue, setBabyIdValue] = useState<string | undefined>(
-    babyId ? babyId.toString() : undefined,
+  const [babyIdValue, setBabyIdValue] = useState<string>(
+    babyId ? babyId.toString() : Object.keys(babies)[0],
   );
   const [textAreaValue, setTextAreaValue] = useState<string>(
     notes ? notes : '',
@@ -62,17 +62,19 @@ const AddAppointment = ({route, navigation}) => {
     _length: number,
     _weight: number,
     _head: number,
-    _babyId: number,
+    _babyId: string,
     _id?: string,
   ) => {
-    if (!age || !length || !weight || !head || !babyId) {
+    if (!_babyId || !_date) {
       setShowError(true);
+      setTimeout(() => {
+        setShowError(false);
+      }, 3000);
       return;
     }
     if (_id) {
       dispatch(
-        updateAppointment({
-          id: _id,
+        updateAppointment(_id, {
           notes: _notes,
           date: _date,
           age: _age,
@@ -83,23 +85,24 @@ const AddAppointment = ({route, navigation}) => {
         }),
       );
     } else {
+      const uniqueId = getUniqueId();
       dispatch(
-        createAppointment({
-          id: getUniqueId(),
-          notes,
-          date,
-          age,
-          length,
-          weight,
-          head,
-          babyId,
+        createAppointment(uniqueId, {
+          notes: _notes,
+          date: _date,
+          age: _age,
+          length: _length,
+          weight: _weight,
+          head: _head,
+          babyId: _babyId,
         }),
       );
     }
+    navigation.goBack();
   };
 
   const OPTIONS = Object.entries(babies).map(([_, value]) => ({
-    value: value.id.toString(),
+    value: _,
     label: value.name,
   }));
 
@@ -122,14 +125,13 @@ const AddAppointment = ({route, navigation}) => {
               const randomLength = Math.floor(Math.random() * 100);
               const randomWeight = Math.floor(Math.random() * 100);
               const randomHead = Math.floor(Math.random() * 100);
-              const randomBabyId = Math.floor(Math.random() * 100);
               setDateValue(randomDate);
               setAgeValue(randomAge.toString());
               setLenghtValue(randomLength.toString());
               setWeightValue(randomWeight.toString());
               setHeadValue(randomHead.toString());
               setTextAreaValue('Notes');
-              setBabyIdValue(randomBabyId.toString());
+              setBabyIdValue(babyIdValue);
             }}
           />
         )}
@@ -148,7 +150,7 @@ const AddAppointment = ({route, navigation}) => {
               placeholder="Select Baby"
               options={OPTIONS}
               value={babyIdValue}
-              onSelect={setBabyIdValue}
+              onSelect={() => setBabyIdValue(babyIdValue)}
             />
           </View>
           <TextInput
@@ -226,11 +228,10 @@ const AddAppointment = ({route, navigation}) => {
                 Number(lengthValue),
                 Number(weightValue),
                 Number(headValue),
-                Number(babyIdValue),
+                babyIdValue,
                 idAppointment,
               );
               setTextAreaValue('');
-              navigation.goBack();
             }}>
             Save
           </Button>

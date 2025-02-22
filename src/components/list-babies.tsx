@@ -3,7 +3,7 @@ import moment from 'moment';
 import {FlatList, View} from 'react-native';
 import {useTheme, Card, Text, Divider, Button} from 'react-native-paper';
 
-import {deleteBaby} from '../store/babies';
+import {deleteBabyAndLinked} from '../store/app';
 import {BabiesObj} from '../store/babies/babies.models.ts';
 import {ContainerStyles} from '../styles';
 import {useAppDispatch} from '../store';
@@ -18,12 +18,12 @@ const ListBabies = ({babies, navigation}: Props) => {
   const dispatch = useAppDispatch();
 
   const _deleteBaby = (id: string) => {
-    dispatch(deleteBaby(id));
+    dispatch(deleteBabyAndLinked(id));
     navigation.goBack();
   };
 
   const _modifyBaby = (
-    id: number,
+    id: string,
     name: string,
     birth: Date,
     gender: string,
@@ -53,7 +53,7 @@ const ListBabies = ({babies, navigation}: Props) => {
   };
 
   const _renderItem = ({item}) => {
-    const [_, itemData] = item;
+    const [key, itemData] = item;
     return (
       <Card
         mode="contained"
@@ -81,7 +81,7 @@ const ListBabies = ({babies, navigation}: Props) => {
             <Text variant="bodyLarge" style={{marginVertical: 10}}>
               More info
             </Text>
-            <Text variant="bodyMedium">ID: {itemData.id}</Text>
+            <Text variant="bodyMedium">ID: {key}</Text>
             <Text variant="bodyMedium">Gender: {itemData.gender}</Text>
             <Text variant="bodyMedium">Place: {itemData.place}</Text>
             <Text variant="bodyMedium">Mother: {itemData.mother}</Text>
@@ -110,7 +110,7 @@ const ListBabies = ({babies, navigation}: Props) => {
               icon={'calendar-edit'}
               onPress={() =>
                 _modifyBaby(
-                  itemData.id,
+                  key,
                   itemData.name,
                   itemData.birth,
                   itemData.gender,
@@ -130,7 +130,7 @@ const ListBabies = ({babies, navigation}: Props) => {
               mode={'text'}
               textColor={colors.error}
               icon={'trash-can-outline'}
-              onPress={() => _deleteBaby(itemData.id)}>
+              onPress={() => _deleteBaby(key)}>
               Delete
             </Button>
           </Card.Actions>

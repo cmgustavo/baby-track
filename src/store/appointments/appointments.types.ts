@@ -8,6 +8,7 @@ export enum AppointmentActionTypes {
   APPOINTMENT_CREATE = 'APPOINTMENT/CREATE',
   APPOINTMENT_DELETE = 'APPOINTMENT/DELETE',
   APPOINTMENT_UPDATE = 'APPOINTMENT/UPDATE',
+  APPOINTMENT_DELETE_BY_BABY = 'APPOINTMENT/DELETE_BY_BABY',
 }
 
 interface AppointmentSuccess {
@@ -21,7 +22,10 @@ interface AppointmentFailed {
 
 interface CreateAppointment {
   type: typeof AppointmentActionTypes.APPOINTMENT_CREATE;
-  payload: AppointmentObj;
+  payload: {
+    id: string;
+    appointment: AppointmentObj;
+  };
 }
 
 interface DeleteAppointment {
@@ -31,7 +35,7 @@ interface DeleteAppointment {
 
 interface UpdateAppointment {
   type: typeof AppointmentActionTypes.APPOINTMENT_UPDATE;
-  payload: AppointmentObj;
+  payload: {id: string; appointment: AppointmentObj};
 }
 
 export type AppointmentsActionType =

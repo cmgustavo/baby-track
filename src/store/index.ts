@@ -13,7 +13,6 @@ import {Selector} from 'reselect';
 import {useDispatch, useSelector, TypedUseSelectorHook} from 'react-redux';
 
 import {AppReducer, AppReduxPersistBlackList} from './app/app.reducer';
-import {NotesReducer, NotesReduxPersistBlackList} from './notes/notes.reducer';
 import {
   AppointmentsReducer,
   AppointmentsReduxPersistBlackList,
@@ -25,7 +24,6 @@ import {
 
 const reducers = {
   APP: AppReducer,
-  NOTES: NotesReducer,
   APPOINTMENTS: AppointmentsReducer,
   BABIES: BabiesReducer,
 };
@@ -49,7 +47,6 @@ export const reduxStorage: Storage = {
 
 const reducerPersistBlackLists: Record<keyof typeof reducers, string[]> = {
   APP: AppReduxPersistBlackList,
-  NOTES: NotesReduxPersistBlackList,
   APPOINTMENTS: AppointmentsReduxPersistBlackList,
   BABIES: BabiesReduxPersistBlackList,
 };

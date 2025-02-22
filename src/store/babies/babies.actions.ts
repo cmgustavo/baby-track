@@ -10,9 +10,9 @@ export const babiesFailed = (): BabiesActionType => ({
   type: BabyActionTypes.BABY_FAILED,
 });
 
-export const createBaby = (baby: BabyObj): BabiesActionType => ({
+export const createBaby = (id: string, baby: BabyObj): BabiesActionType => ({
   type: BabyActionTypes.BABY_CREATE,
-  payload: baby,
+  payload: {id: id, baby: baby},
 });
 
 export const deleteBaby = (id: string): BabiesActionType => ({
@@ -20,7 +20,7 @@ export const deleteBaby = (id: string): BabiesActionType => ({
   payload: id,
 });
 
-export const updateBaby = (baby: BabyObj): BabiesActionType => ({
+export const updateBaby = (id: string, baby: BabyObj): BabiesActionType => ({
   type: BabyActionTypes.BABY_UPDATE,
-  payload: baby,
+  payload: {id: id, baby: baby},
 });

@@ -3,7 +3,6 @@ export type BabiesObj = {
 };
 
 export type BabyObj = {
-  id: number;
   name: string;
   birth: Date;
   gender: string;

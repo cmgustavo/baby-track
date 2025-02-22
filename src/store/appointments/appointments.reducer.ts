@@ -41,7 +41,7 @@ export const AppointmentsReducer = (
         ...state,
         appointments: {
           ...state.appointments,
-          [action.payload.id]: action.payload,
+          [action.payload.id]: action.payload.appointment,
         },
       };
 
@@ -62,7 +62,7 @@ export const AppointmentsReducer = (
         ...state,
         appointments: {
           ...state.appointments,
-          [action.payload.id]: action.payload,
+          [action.payload.id]: action.payload.appointment,
         },
       };
 

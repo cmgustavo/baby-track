@@ -17,7 +17,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
   const dispatch = useAppDispatch();
   const _deleteAppointment = (id: string) => {
     dispatch(deleteAppointment(id));
-    navigation.goBack();
+    navigation.goBack(2);
   };
 
   const _modifyAppointment = (
@@ -42,7 +42,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
     });
   };
   const _renderItem = ({item}) => {
-    const [_, itemData] = item;
+    const [key, itemData] = item;
     return (
       <Card
         mode="contained"
@@ -81,7 +81,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
             icon={'calendar-edit'}
             onPress={() =>
               _modifyAppointment(
-                itemData.id,
+                key,
                 itemData.notes,
                 itemData.date,
                 itemData.age,
@@ -97,7 +97,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
             textColor={colors.error}
             mode={'text'}
             icon={'trash-can-outline'}
-            onPress={() => _deleteAppointment(itemData.id)}>
+            onPress={() => _deleteAppointment(key)}>
             Delete
           </Button>
         </Card.Actions>
