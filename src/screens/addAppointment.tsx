@@ -6,52 +6,96 @@ import DatePicker from 'react-native-date-picker';
 import {Dropdown} from 'react-native-paper-dropdown';
 
 import {useAppDispatch, useAppSelector, RootState} from '../store';
-import {createAppointment} from '../store/appointments';
+import {createAppointment, updateAppointment} from '../store/appointments';
 import {ContainerStyles} from '../styles';
 import CombinedDarkTheme from '../themes/dark';
 import CombinedDefaultTheme from '../themes/light';
+import ErrorMessage from '../components/error.tsx';
 
 const getUniqueId = () => {
   return Math.random().toString(36).substr(2, 9);
 };
 
-const AddAppointment = ({navigation}) => {
+const AddAppointment = ({route, navigation}) => {
+  const {
+    id: idAppointment,
+    notes,
+    date,
+    age,
+    length,
+    weight,
+    head,
+    babyId,
+  } = route.params;
   const dispatch = useAppDispatch();
   const {dark} = useTheme();
   const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
   const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
-  const [babyIdValue, setBabyIdValue] = useState<string>();
-  const [textAreaValue, setTextAreaValue] = useState('');
-  const [dateValue, setDateValue] = useState<Date>(new Date());
+  const [babyIdValue, setBabyIdValue] = useState<string | undefined>(
+    babyId ? babyId.toString() : undefined,
+  );
+  const [textAreaValue, setTextAreaValue] = useState<string>(
+    notes ? notes : '',
+  );
+  const [dateValue, setDateValue] = useState<Date>(
+    date ? new Date(date) : new Date(),
+  );
   const [open, setOpen] = useState(false);
-  const [ageValue, setAgeValue] = useState('');
-  const [lengthValue, setLenghtValue] = useState('');
-  const [weightValue, setWeightValue] = useState('');
-  const [headValue, setHeadValue] = useState('');
+  const [ageValue, setAgeValue] = useState<string>(age ? age.toString() : '');
+  const [lengthValue, setLenghtValue] = useState<string>(
+    length ? length.toString() : '',
+  );
+  const [weightValue, setWeightValue] = useState<string>(
+    weight ? weight.toString() : '',
+  );
+  const [headValue, setHeadValue] = useState<string>(
+    head ? head.toString() : '',
+  );
+  const [showError, setShowError] = useState(false);
 
   const IS_DEV = __DEV__;
 
-  const addAppointment = (
-    notes: string,
-    date: Date,
-    age: number,
-    length: number,
-    weight: number,
-    head: number,
-    babyId: number,
+  const _addAppointment = (
+    _notes: string,
+    _date: Date,
+    _age: number,
+    _length: number,
+    _weight: number,
+    _head: number,
+    _babyId: number,
+    _id?: string,
   ) => {
-    dispatch(
-      createAppointment({
-        id: getUniqueId(),
-        notes,
-        date,
-        age,
-        length,
-        weight,
-        head,
-        babyId,
-      }),
-    );
+    if (!age || !length || !weight || !head || !babyId) {
+      setShowError(true);
+      return;
+    }
+    if (_id) {
+      dispatch(
+        updateAppointment({
+          id: _id,
+          notes: _notes,
+          date: _date,
+          age: _age,
+          length: _length,
+          weight: _weight,
+          head: _head,
+          babyId: _babyId,
+        }),
+      );
+    } else {
+      dispatch(
+        createAppointment({
+          id: getUniqueId(),
+          notes,
+          date,
+          age,
+          length,
+          weight,
+          head,
+          babyId,
+        }),
+      );
+    }
   };
 
   const OPTIONS = Object.entries(babies).map(([_, value]) => ({
@@ -90,6 +134,12 @@ const AddAppointment = ({navigation}) => {
           />
         )}
       </Appbar.Header>
+      {showError && (
+        <ErrorMessage
+          errorText1={'Error'}
+          errorText2={'Missing required parameters for appointment creation'}
+        />
+      )}
       <ScrollView>
         <View style={[ContainerStyles.formContainer]}>
           <View style={{marginBottom: 10}}>
@@ -169,7 +219,7 @@ const AddAppointment = ({navigation}) => {
             style={{marginTop: 20}}
             disabled={!babyIdValue || !dateValue}
             onPress={() => {
-              addAppointment(
+              _addAppointment(
                 textAreaValue,
                 dateValue,
                 Number(ageValue),
@@ -177,6 +227,7 @@ const AddAppointment = ({navigation}) => {
                 Number(weightValue),
                 Number(headValue),
                 Number(babyIdValue),
+                idAppointment,
               );
               setTextAreaValue('');
               navigation.goBack();

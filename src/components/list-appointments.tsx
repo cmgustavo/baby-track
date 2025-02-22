@@ -19,6 +19,28 @@ const ListAppointments = ({appointments, navigation}: Props) => {
     dispatch(deleteAppointment(id));
     navigation.goBack();
   };
+
+  const _modifyAppointment = (
+    id: string,
+    notes: string,
+    date: Date,
+    age: number,
+    length: number,
+    weight: number,
+    head: number,
+    babyId: number,
+  ) => {
+    navigation.navigate('AddAppointment', {
+      id,
+      notes,
+      date,
+      age,
+      length,
+      weight,
+      head,
+      babyId,
+    });
+  };
   const _renderItem = ({item}) => {
     const [_, itemData] = item;
     return (
@@ -54,8 +76,27 @@ const ListAppointments = ({appointments, navigation}: Props) => {
         </Card.Content>
         <Card.Actions>
           <Button
+            textColor={colors.inverseSurface}
+            mode={'text'}
+            icon={'calendar-edit'}
+            onPress={() =>
+              _modifyAppointment(
+                itemData.id,
+                itemData.notes,
+                itemData.date,
+                itemData.age,
+                itemData.length,
+                itemData.weight,
+                itemData.head,
+                itemData.babyId,
+              )
+            }>
+            Edit
+          </Button>
+          <Button
+            textColor={colors.error}
+            mode={'text'}
             icon={'trash-can-outline'}
-            mode="contained"
             onPress={() => _deleteAppointment(itemData.id)}>
             Delete
           </Button>

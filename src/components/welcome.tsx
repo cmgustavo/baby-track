@@ -21,7 +21,7 @@ const Welcome = ({navigation}: Props) => {
         onPress={() => {
           navigation.navigate('AddBaby');
         }}>
-        Add a new baby
+        Add a baby
       </Button>
     </View>
   );

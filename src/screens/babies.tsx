@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {View} from 'react-native';
 import {
   useTheme,
-  FAB,
   ActivityIndicator,
   Text,
   Button,
@@ -14,7 +13,7 @@ import {initializeBabies} from '../store/babies';
 
 import ErrorMessage from '../components/error';
 import ListBabies from '../components/list-babies';
-import {ContainerStyles, GlobalStyles, TextStyles} from '../styles';
+import {ContainerStyles, TextStyles} from '../styles';
 import CombinedDarkTheme from '../themes/dark';
 import CombinedDefaultTheme from '../themes/light';
 
@@ -77,11 +76,6 @@ const Appointments = ({navigation}) => {
         ) : (
           <>
             <ListBabies babies={babies} navigation={navigation} />
-            <FAB
-              icon="plus"
-              style={GlobalStyles.fab}
-              onPress={() => navigation.navigate('AddBaby')}
-            />
           </>
         )}
       </View>
