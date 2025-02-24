@@ -63,6 +63,7 @@ export const ContainerStyles = StyleSheet.create({
   },
   vaccinesContainer: {
     flex: 1,
+    marginVertical: 10,
   },
   vaccinesListContainer: {
     paddingLeft: 15,

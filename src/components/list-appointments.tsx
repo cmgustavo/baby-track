@@ -112,10 +112,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
 
   return (
     <FlatList
-      style={[
-        ContainerStyles.appointmentContainer,
-        {backgroundColor: colors.background},
-      ]}
+      style={[ContainerStyles.appointmentContainer]}
       renderItem={_renderItem}
       data={Object.entries(appointments).reverse()}
       keyExtractor={_keyExtractor}

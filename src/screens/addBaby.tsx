@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import moment from 'moment';
 import {ScrollView, View} from 'react-native';
-import {TextInput, Button, Appbar, useTheme} from 'react-native-paper';
+import {TextInput, Button, Appbar} from 'react-native-paper';
 import DatePicker from 'react-native-date-picker';
 
 import {useAppDispatch} from '../store';
 import {createBaby, updateBaby} from '../store/babies';
 import {ContainerStyles} from '../styles';
-import CombinedDarkTheme from '../themes/dark';
-import CombinedDefaultTheme from '../themes/light';
 import ErrorMessage from '../components/error.tsx';
 
 const AddBaby = ({route, navigation}) => {
@@ -27,9 +25,6 @@ const AddBaby = ({route, navigation}) => {
     notes,
     context,
   } = route.params || ({} as any);
-  console.log(route.params);
-  const {dark} = useTheme();
-  const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
   const [textAreaValue, setTextAreaValue] = useState<string>(
     notes ? notes : '',
   );
@@ -111,10 +106,7 @@ const AddBaby = ({route, navigation}) => {
 
   return (
     <>
-      <Appbar.Header
-        theme={appTheme}
-        mode={'small'}
-        style={{backgroundColor: appTheme.colors.primary}}>
+      <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Add a new baby" />
         {IS_DEV ? (

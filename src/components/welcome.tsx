@@ -12,7 +12,14 @@ const Welcome = ({navigation}: Props) => {
   const {colors} = useTheme();
   return (
     <View style={ContainerStyles.welcomeContainer}>
-      <Text variant="titleLarge">Welcome to Baby Tracker</Text>
+      <Text
+        variant="titleLarge"
+        style={[
+          TextStyles.title,
+          {color: colors.primary, borderColor: colors.surfaceVariant},
+        ]}>
+        Welcome to <Text style={TextStyles.highlight}>Baby Tracker</Text>
+      </Text>
       <Text style={[TextStyles.subtitle, {color: colors.secondary}]}>
         Get start tracking your baby's growth and vaccine schedule.
       </Text>

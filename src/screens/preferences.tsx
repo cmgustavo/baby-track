@@ -1,17 +1,12 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {useTheme, Divider, List, Text, Appbar} from 'react-native-paper';
+import {Divider, List, Text, Appbar} from 'react-native-paper';
 import {ColorSchemeName} from 'react-native';
 
 import {usePreferences} from '../context/PreferencesContext';
 import {ContainerStyles} from '../styles';
-import CombinedDarkTheme from '../themes/dark';
-import CombinedDefaultTheme from '../themes/light';
 
 const Preferences = ({navigation}) => {
-  const {colors, dark} = useTheme();
-  const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
-
   const {colorTheme, setColorTheme} = usePreferences();
   const [checked, setChecked] = useState(colorTheme);
 
@@ -22,18 +17,11 @@ const Preferences = ({navigation}) => {
 
   return (
     <>
-      <Appbar.Header
-        theme={appTheme}
-        mode={'small'}
-        style={{backgroundColor: appTheme.colors.primary}}>
+      <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Preferences" />
       </Appbar.Header>
-      <View
-        style={[
-          ContainerStyles.globalContainer,
-          {backgroundColor: colors.background},
-        ]}>
+      <View style={[ContainerStyles.globalContainer]}>
         <List.Section>
           <List.Subheader>
             <Text variant="titleMedium">Theme Mode</Text>

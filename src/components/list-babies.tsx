@@ -146,10 +146,7 @@ const ListBabies = ({babies, navigation}: Props) => {
 
   return (
     <FlatList
-      style={[
-        ContainerStyles.babyContainer,
-        {backgroundColor: colors.background},
-      ]}
+      style={[ContainerStyles.babyContainer]}
       renderItem={_renderItem}
       data={Object.entries(babies).reverse()}
       keyExtractor={_keyExtractor}

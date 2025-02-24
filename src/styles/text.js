@@ -39,7 +39,7 @@ export const TextStyles = StyleSheet.create({
   title: {
     fontSize: 26,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: 20,
     paddingBottom: 10,
     borderBottomWidth: 1,
   },
@@ -50,7 +50,6 @@ export const TextStyles = StyleSheet.create({
     marginLeft: 10,
   },
   subtitle: {
-    marginTop: 10,
     marginBottom: 20,
   },
   text: {

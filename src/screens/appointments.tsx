@@ -14,12 +14,9 @@ import {useAppSelector, RootState} from '../store';
 import ErrorMessage from '../components/error';
 import ListAppointments from '../components/list-appointments';
 import {ContainerStyles, GlobalStyles, TextStyles} from '../styles';
-import CombinedDarkTheme from '../themes/dark';
-import CombinedDefaultTheme from '../themes/light';
 
 const Appointments = ({navigation}) => {
-  const {colors, dark} = useTheme();
-  const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
+  const {colors} = useTheme();
   const _appointments = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.appointments,
   );
@@ -37,18 +34,11 @@ const Appointments = ({navigation}) => {
 
   return (
     <>
-      <Appbar.Header
-        theme={appTheme}
-        mode={'small'}
-        style={{backgroundColor: appTheme.colors.primary}}>
+      <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Appointments" />
       </Appbar.Header>
-      <View
-        style={[
-          ContainerStyles.globalContainer,
-          {backgroundColor: colors.background},
-        ]}>
+      <View style={[ContainerStyles.globalContainer]}>
         {!status ? (
           <ActivityIndicator
             size="large"

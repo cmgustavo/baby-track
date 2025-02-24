@@ -14,13 +14,10 @@ import {initializeBabies} from '../store/babies';
 import ErrorMessage from '../components/error';
 import ListBabies from '../components/list-babies';
 import {ContainerStyles, TextStyles} from '../styles';
-import CombinedDarkTheme from '../themes/dark';
-import CombinedDefaultTheme from '../themes/light';
 
 const Appointments = ({navigation}) => {
   const dispatch = useAppDispatch();
-  const {colors, dark} = useTheme();
-  const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
+  const {colors} = useTheme();
   const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
   const status = useAppSelector(({BABIES}: RootState) => BABIES.status);
 
@@ -30,18 +27,11 @@ const Appointments = ({navigation}) => {
 
   return (
     <>
-      <Appbar.Header
-        theme={appTheme}
-        mode={'small'}
-        style={{backgroundColor: appTheme.colors.primary}}>
+      <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Baby" />
       </Appbar.Header>
-      <View
-        style={[
-          ContainerStyles.globalContainer,
-          {backgroundColor: colors.background},
-        ]}>
+      <View style={[ContainerStyles.globalContainer]}>
         {!status ? (
           <ActivityIndicator
             size="large"

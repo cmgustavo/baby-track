@@ -35,10 +35,7 @@ const ListVaccines = ({navigation}: Props) => {
   };
   return (
     <FlatList
-      style={[
-        ContainerStyles.vaccinesListContainer,
-        {backgroundColor: colors.background},
-      ]}
+      style={[ContainerStyles.vaccinesListContainer]}
       renderItem={_renderItem}
       data={calendarVaccines}
     />

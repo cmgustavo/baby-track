@@ -17,11 +17,9 @@ import {BabyObj} from '../store/babies/babies.models';
 import Welcome from '../components/welcome';
 import BabyGrowthCharts from '../components/baby-growth-charts';
 import {ContainerStyles, TextStyles} from '../styles';
-import CombinedDarkTheme from '../themes/dark';
-import CombinedDefaultTheme from '../themes/light';
 
 const Home = ({navigation}) => {
-  const {colors, dark} = useTheme();
+  const {colors} = useTheme();
   const [showMenu, setShowMenu] = useState(false);
   const MAIN_MENU = Platform.OS === 'ios' ? 'dots-horizontal' : 'dots-vertical';
   const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
@@ -56,13 +54,9 @@ const Home = ({navigation}) => {
     }
   }, [babies, appointments]);
 
-  const appTheme = dark ? CombinedDarkTheme : CombinedDefaultTheme;
   return (
     <>
-      <Appbar.Header
-        theme={appTheme}
-        mode={'small'}
-        style={{backgroundColor: appTheme.colors.primary}}>
+      <Appbar.Header>
         <Appbar.Content title="Baby Track" />
         <Menu
           style={{marginTop: 55, minWidth: 250}}
@@ -94,11 +88,7 @@ const Home = ({navigation}) => {
           />
         </Menu>
       </Appbar.Header>
-      <View
-        style={[
-          ContainerStyles.globalContainer,
-          {backgroundColor: colors.background},
-        ]}>
+      <View style={[ContainerStyles.globalContainer]}>
         {Object.entries(babies).length == 0 ? (
           <Welcome navigation={navigation} />
         ) : (

@@ -54,11 +54,11 @@ export const PreferencesProvider = ({
   };
 
   return (
-    <SafeAreaProvider style={{backgroundColor: appTheme.colors.background}}>
+    <SafeAreaProvider style={{backgroundColor: appTheme.colors.surface}}>
       <StatusBar
         animated={true}
         barStyle={colorTheme === 'dark' ? 'light-content' : 'dark-content'}
-        backgroundColor={appTheme.colors.primary}
+        backgroundColor={appTheme.colors.surface}
         translucent={true}
       />
       <PreferencesContext.Provider

@@ -22,10 +22,8 @@ export const deleteBabyAndLinked =
         }
       });
       dispatch(deleteBaby(id));
-      console.log('deleteBabyAndLinked');
       return true;
     } catch (error: any) {
-      console.log('deleteBabyAndLinked error');
       return false;
     }
   };
