@@ -66,7 +66,12 @@ export const ContainerStyles = StyleSheet.create({
     marginVertical: 10,
   },
   vaccinesListContainer: {
-    paddingLeft: 15,
+    paddingHorizontal: 20,
+  },
+  vaccinesModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   vaccinesTitleContainer: {
     paddingVertical: 15,
@@ -83,5 +88,18 @@ export const ContainerStyles = StyleSheet.create({
   },
   inputContainer: {
     marginVertical: 10,
+  },
+  vaccinesModalContainer: {
+    marginHorizontal: 30,
+    height: '80%',
+  },
+  vaccinesModalConstantList: {
+    marginTop: 10,
+  },
+  dosageContainer: {
+    marginVertical: 15,
+  },
+  lastAppointmentContainer: {
+    marginBottom: 20,
   },
 });

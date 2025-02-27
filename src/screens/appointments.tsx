@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {
   useTheme,
-  FAB,
   ActivityIndicator,
   Text,
   Button,
@@ -13,7 +12,7 @@ import {useAppSelector, RootState} from '../store';
 
 import ErrorMessage from '../components/error';
 import ListAppointments from '../components/list-appointments';
-import {ContainerStyles, GlobalStyles, TextStyles} from '../styles';
+import {ContainerStyles, TextStyles} from '../styles';
 
 const Appointments = ({navigation}) => {
   const {colors} = useTheme();
@@ -37,6 +36,10 @@ const Appointments = ({navigation}) => {
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Appointments" />
+        <Appbar.Action
+          icon={'plus'}
+          onPress={() => navigation.navigate('AddAppointment')}
+        />
       </Appbar.Header>
       <View style={[ContainerStyles.globalContainer]}>
         {!status ? (
@@ -92,11 +95,6 @@ const Appointments = ({navigation}) => {
             <ListAppointments
               appointments={appointments}
               navigation={navigation}
-            />
-            <FAB
-              icon="plus"
-              style={GlobalStyles.fab}
-              onPress={() => navigation.navigate('AddAppointment')}
             />
           </>
         )}

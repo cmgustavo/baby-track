@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import {View, ScrollView, Platform} from 'react-native';
 import {
+  Card,
   useTheme,
   IconButton,
   Text,
@@ -31,6 +32,22 @@ const Home = ({navigation}) => {
     Object.keys(appointments).length > 0,
   );
 
+  const showLastAppointment = () => {
+    const lastAppointment = Object.values(appointments).reduce((a, b) =>
+      a.date > b.date ? a : b,
+    );
+    return lastAppointment;
+  };
+
+  const vaccines = useAppSelector(({VACCINES}: RootState) => VACCINES.vaccines);
+  const babyVaccines = Object.entries(vaccines)
+    .filter(([_, value]) => value.babyId === Object.keys(babies)[0])
+    .map(([_, value]) => value);
+  const getLatestVaccine = () => {
+    return babyVaccines.reduce((a, b) => (a.date > b.date ? a : b));
+  };
+  const [latestVaccine, setLatestVaccine] = useState(getLatestVaccine());
+
   const formatData = data => {
     const entries = Object.values(data); // Convert object to array
     const sortedEntries = entries.sort((a, b) => a.age - b.age); // Sort by age
@@ -51,8 +68,9 @@ const Home = ({navigation}) => {
     if (Object.entries(babies).length > 0) {
       setBaby(Object.values(babies)[0]);
       setHasAppointments(Object.keys(appointments).length > 0);
+      setLatestVaccine(getLatestVaccine());
     }
-  }, [babies, appointments]);
+  }, [babies, appointments, vaccines]);
 
   return (
     <>
@@ -105,17 +123,54 @@ const Home = ({navigation}) => {
                 {moment(baby?.birth).format('dddd, MMMM Do YYYY, H:mm')}
               </Text>
               {hasAppointments ? (
-                <>
-                  <Text
-                    variant="titleLarge"
-                    style={[TextStyles.contentTitle, {color: colors.tertiary}]}>
+                <View>
+                  <View style={ContainerStyles.lastAppointmentContainer}>
+                    <Text variant="titleMedium">Last appointment</Text>
+                    <Text style={{marginBottom: 10}} variant="bodyLarge">
+                      {moment(showLastAppointment().date).format(
+                        'dddd, MMMM Do YYYY',
+                      )}
+                    </Text>
+                    <Text variant="bodyMedium">
+                      Age {showLastAppointment().age} months
+                    </Text>
+                    <Text variant="bodyMedium">
+                      Length: {showLastAppointment().length} cm
+                    </Text>
+                    <Text variant="bodyMedium">
+                      Weight: {showLastAppointment().weight} Kg
+                    </Text>
+                    <Text variant="bodyMedium">
+                      Head: {showLastAppointment().head} cm
+                    </Text>
+                  </View>
+                  <View style={ContainerStyles.lastAppointmentContainer}>
+                    <Text variant="titleMedium">Last vaccine</Text>
+                    <Text style={{marginBottom: 10}} variant="bodyLarge">
+                      {moment(latestVaccine.date).format('dddd, MMMM Do YYYY')}
+                    </Text>
+                    <Text variant="bodyMedium">{latestVaccine.name}</Text>
+                    <Text variant="bodyMedium">
+                      Dose: {latestVaccine.dosage.dose}
+                    </Text>
+                    <Text variant="bodyMedium">
+                      Stage: {latestVaccine.dosage.stage}
+                    </Text>
+                    <Text variant="bodyMedium">
+                      {latestVaccine.dosage.unique ? 'Unique' : 'Not unique'}
+                    </Text>
+                    <Text variant="bodyMedium">
+                      {latestVaccine.dosage.booster ? 'Booster' : 'Not booster'}
+                    </Text>
+                  </View>
+                  <Text style={{marginBottom: 20}} variant="titleMedium">
                     Growth graph
                   </Text>
                   <BabyGrowthCharts
                     data={formatData(appointments)}
                     navigation={navigation}
                   />
-                </>
+                </View>
               ) : (
                 <>
                   <Text variant="titleSmall">

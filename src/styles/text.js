@@ -14,7 +14,6 @@ export const TextStyles = StyleSheet.create({
   },
   contentTitle: {
     marginBottom: 15,
-    fontSize: 18,
   },
   contentSubtitle: {
     fontWeight: '400',
