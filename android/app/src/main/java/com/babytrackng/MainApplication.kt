@@ -1,4 +1,4 @@
-package com.babytrack
+package com.babytrackng
 
 import android.app.Application
 import com.facebook.react.PackageList

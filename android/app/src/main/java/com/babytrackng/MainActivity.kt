@@ -1,4 +1,4 @@
-package com.babytrack
+package com.babytrackng
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
