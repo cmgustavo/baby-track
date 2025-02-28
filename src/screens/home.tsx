@@ -44,6 +44,7 @@ const Home = ({navigation}) => {
     .filter(([_, value]) => value.babyId === Object.keys(babies)[0])
     .map(([_, value]) => value);
   const getLatestVaccine = () => {
+    if (babyVaccines.length === 0) return {};
     return babyVaccines.reduce((a, b) => (a.date > b.date ? a : b));
   };
   const [latestVaccine, setLatestVaccine] = useState(getLatestVaccine());
