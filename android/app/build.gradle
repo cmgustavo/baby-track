@@ -93,6 +93,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if (project.hasProperty('BABYTRACK_UPLOAD_STORE_FILE')) {
+                storeFile file(BABYTRACK_UPLOAD_STORE_FILE)
+                storePassword BABYTRACK_UPLOAD_STORE_PASSWORD
+                keyAlias BABYTRACK_UPLOAD_KEY_ALIAS
+                keyPassword BABYTRACK_UPLOAD_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
