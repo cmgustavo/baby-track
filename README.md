@@ -3,7 +3,7 @@
 # BabyTrack
 ### Track your baby's growth, doctor visits, and vaccine schedule effortlessly.
 
-"Baby Track" is a user-friendly mobile app designed to help parents effortlessly monitor their baby's growth and health. the app allows you to record and visualize your baby's weight and height over time. It also includes features to track vaccination schedules, with reminders for upcoming vaccines. 
+"Baby Track" is a user-friendly mobile app designed to help parents effortlessly monitor their baby's growth and health. the app allows you to record and visualize your baby's weight and height over time. It also includes features to track vaccination schedules, with reminders for upcoming vaccines.
 
 Additionally, "Baby Track" stores essential birth details like the date, time, gestational weeks, doctor, and hospital, making it a comprehensive tool for keeping all your baby's key information in one place. Designed with simplicity in mind, "Baby Track" ensures that parents can easily and quickly access the information they need to support their baby's health and development.
 
@@ -16,14 +16,25 @@ Additionally, "Baby Track" stores essential birth details like the date, time, g
 
 ## Screenshot Gallery
 
-WIP
-| ![Home Dark](docs/Home-dark.png) | ![Home Light](docs/Home-light.png) |
+| ![Home Dark](docs/home-dark.jpg) | ![Home Light](docs/home-light.jpg) |
 |----------------------------|-----------------------------|
 | Home (Dark) | Home (Light) |
 
-| ![Home Empty Light](docs/HomeEmpty-light.png) | ![Home Empty Dark](docs/HomeEmpty-dark.png) |
+| ![Baby Light](docs/baby-light.jpg) | ![Baby Dark](docs/baby-dark.jpg) |
 |-----------------------------------------|----------------------------------------|
-| Home Empty (Light) | Home Empty (Dark) |
+| Baby (Light) | Baby (Dark) |
+
+| ![Vaccines Light](docs/vaccines-light.jpg) | ![Vaccines Dark](docs/vaccines-dark.jpg) |
+|-----------------------------------------|----------------------------------------|
+| Vaccines (Light) | Vaccines (Dark) |
+
+| ![Appointments Light](docs/appointments-light.jpg) | ![Appointments Dark](docs/appointments-dark.jpg)
+|-----------------------------------------|----------------------------------------|
+| Appointments (Light) | Appointments (Dark) |
+
+| ![Settings Light](docs/preferences-light.jpg) | ![Settings Dark](docs/preferences-dark.jpg) |
+|-----------------------------------------|----------------------------------------|
+| Settings (Light) | Settings (Dark) |
 
 
 ## Privacy Policy
