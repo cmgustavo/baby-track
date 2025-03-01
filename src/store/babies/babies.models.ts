@@ -3,6 +3,7 @@ export type BabiesObj = {
 };
 
 export type BabyObj = {
+  dni: number;
   name: string;
   birth: Date;
   gender: string;

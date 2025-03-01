@@ -9,10 +9,15 @@ import {createBaby, updateBaby} from '../store/babies';
 import {ContainerStyles} from '../styles';
 import ErrorMessage from '../components/error.tsx';
 
+const getUniqueId = () => {
+  return Math.random().toString(36).substr(2, 9);
+};
+
 const AddBaby = ({route, navigation}) => {
   const dispatch = useAppDispatch();
   const {
     id,
+    dni,
     name,
     gender,
     birth,
@@ -32,6 +37,7 @@ const AddBaby = ({route, navigation}) => {
     birth ? new Date(birth) : new Date(),
   );
   const [idValue, setIdValue] = useState<string>(id || '');
+  const [dniValue, setDniValue] = useState<string>(dni ? dni.toString() : '');
   const [nameValue, setNameValue] = useState<string>(name ? name : '');
   const [genderValue, setGenderValue] = useState<string>(
     gender ? gender : 'Male',
@@ -55,6 +61,7 @@ const AddBaby = ({route, navigation}) => {
 
   const _addBaby = (
     _id: string,
+    _dni: string,
     _name: string,
     _gender: string,
     _birth: Date,
@@ -66,13 +73,14 @@ const AddBaby = ({route, navigation}) => {
     _pediatrician: string,
     _notes: string,
   ) => {
-    if (!_name || !_gender || !_birth || !_length || !_weight) {
+    if (!_dni || !_name || !_birth) {
       setShowError(true);
       return;
     }
     if (context === 'edit') {
       dispatch(
         updateBaby(_id, {
+          dni: Number(_dni),
           name: _name,
           gender: _gender,
           birth: _birth,
@@ -88,6 +96,7 @@ const AddBaby = ({route, navigation}) => {
     } else {
       dispatch(
         createBaby(_id, {
+          dni: Number(_dni),
           name: _name,
           gender: _gender,
           birth: _birth,
@@ -113,7 +122,7 @@ const AddBaby = ({route, navigation}) => {
           <Appbar.Action
             icon="bug"
             onPress={() => {
-              setIdValue('123456789');
+              setDniValue('30234211');
               setNameValue('Baby');
               setGenderValue('Male');
               setBirthValue(new Date());
@@ -139,9 +148,9 @@ const AddBaby = ({route, navigation}) => {
           <TextInput
             style={[ContainerStyles.inputContainer]}
             mode="outlined"
-            label="ID"
-            value={idValue}
-            onChangeText={v => setIdValue(v)}
+            label="ID (DNI)"
+            value={dniValue}
+            onChangeText={v => setDniValue(v)}
           />
           <TextInput
             style={[ContainerStyles.inputContainer]}
@@ -239,10 +248,14 @@ const AddBaby = ({route, navigation}) => {
             icon="content-save"
             mode="contained"
             style={{marginTop: 20}}
-            disabled={!idValue}
+            disabled={!dniValue}
             onPress={() => {
+              if (!idValue) {
+                setIdValue(getUniqueId());
+              }
               _addBaby(
                 idValue,
+                dniValue,
                 nameValue,
                 genderValue,
                 birthValue,

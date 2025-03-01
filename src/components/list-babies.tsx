@@ -24,6 +24,7 @@ const ListBabies = ({babies, navigation}: Props) => {
 
   const _modifyBaby = (
     id: string,
+    dni: string,
     name: string,
     birth: Date,
     gender: string,
@@ -38,6 +39,7 @@ const ListBabies = ({babies, navigation}: Props) => {
   ) => {
     navigation.navigate('AddBaby', {
       id,
+      dni,
       name,
       birth,
       gender,
@@ -81,7 +83,7 @@ const ListBabies = ({babies, navigation}: Props) => {
             <Text variant="bodyLarge" style={{marginVertical: 10}}>
               More info
             </Text>
-            <Text variant="bodyMedium">ID: {key}</Text>
+            <Text variant="bodyMedium">DNI: {itemData.dni}</Text>
             <Text variant="bodyMedium">Gender: {itemData.gender}</Text>
             <Text variant="bodyMedium">Place: {itemData.place}</Text>
             <Text variant="bodyMedium">Mother: {itemData.mother}</Text>
@@ -111,6 +113,7 @@ const ListBabies = ({babies, navigation}: Props) => {
               onPress={() =>
                 _modifyBaby(
                   key,
+                  itemData.dni,
                   itemData.name,
                   itemData.birth,
                   itemData.gender,
