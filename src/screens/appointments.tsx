@@ -13,6 +13,8 @@ import {useAppSelector, RootState} from '../store';
 import ErrorMessage from '../components/error';
 import ListAppointments from '../components/list-appointments';
 import {ContainerStyles, TextStyles} from '../styles';
+import {AppointmentsObj} from '../store/appointments/appointments.models.ts';
+import {BabiesObj} from '../store/babies/babies.models.ts';
 
 const Appointments = ({navigation}) => {
   const {colors} = useTheme();
@@ -23,8 +25,10 @@ const Appointments = ({navigation}) => {
   const status = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.status,
   );
-  const [appointments, setAppointments] = useState(_appointments);
-  const [babies, setBabies] = useState(_babies);
+  const [appointments, setAppointments] = useState<
+    AppointmentsObj | {}
+  >(_appointments);
+  const [babies, setBabies] = useState<BabiesObj | {}>(_babies);
 
   useEffect(() => {
     setAppointments(_appointments);
@@ -36,10 +40,12 @@ const Appointments = ({navigation}) => {
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Appointments" />
-        <Appbar.Action
-          icon={'plus'}
-          onPress={() => navigation.navigate('AddAppointment')}
-        />
+        {Object.keys(babies).length > 0 ? (
+          <Appbar.Action
+            icon={'plus'}
+            onPress={() => navigation.navigate('AddAppointment')}
+          />
+        ) : null}
       </Appbar.Header>
       <View style={[ContainerStyles.globalContainer]}>
         {!status ? (
@@ -54,7 +60,7 @@ const Appointments = ({navigation}) => {
             errorText2={'Could not load the page'}
           />
         ) : null}
-        {Object.entries(appointments).length == 0 ? (
+        {Object.keys(appointments).length === 0 ? (
           <View style={[ContainerStyles.babyContainerEmpty]}>
             <Text
               variant="titleLarge"
@@ -67,12 +73,13 @@ const Appointments = ({navigation}) => {
               You have to add an appointment to start tracking the growth and
               vaccine schedule.
             </Text>
-            {Object.entries(babies).length == 0 ? (
+            {Object.keys(babies).length === 0 ? (
               <>
                 <Text variant="titleSmall" style={[{color: colors.tertiary}]}>
                   Please add a baby first to add an appointment.
                 </Text>
                 <Button
+                  mode="contained"
                   style={{marginTop: 20}}
                   onPress={() => {
                     navigation.navigate('AddBaby');

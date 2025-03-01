@@ -1,13 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {useTheme, Appbar, Portal, Modal, Text} from 'react-native-paper';
+import {
+  useTheme,
+  Appbar,
+  Portal,
+  Modal,
+  Text,
+  Button,
+} from 'react-native-paper';
 import moment from 'moment';
 
-import {ContainerStyles} from '../styles';
+import {ContainerStyles, TextStyles} from '../styles';
 
 import ListConstantVaccines from '../components/list-constant-vaccines.tsx';
 import ListVaccinesRegistered from '../components/list-vaccines-registered.tsx';
 import {RootState, useAppSelector} from '../store';
 import {View} from 'react-native';
+import {BabyObj} from '../store/babies/babies.models.ts';
 
 const Vaccines = ({navigation}) => {
   const {colors} = useTheme();
@@ -18,8 +26,10 @@ const Vaccines = ({navigation}) => {
   );
 
   // Select first baby by default
-  const [baby, setBaby] = useState(_babies[Object.keys(_babies)[0]]);
-  const [babyId, setBabyId] = useState(Object.keys(_babies)[0]);
+  const [baby, setBaby] = useState<BabyObj>(_babies[Object.keys(_babies)[0]]);
+  const [babyId, setBabyId] = useState<string | undefined>(
+    Object.keys(_babies)[0],
+  );
 
   // List vaccines using the baby selected by default [VaccineId]: {... babyId: string}
   const [vaccinesRegistered, setVaccinesRegistered] = useState(
@@ -35,33 +45,56 @@ const Vaccines = ({navigation}) => {
     setVaccinesRegistered(
       Object.entries(_vaccines).filter(([_, value]) => value.babyId === babyId),
     );
-  }, [_babies, _vaccines]);
+  }, [_babies, _vaccines, babyId]);
   return (
     <>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
         <Appbar.Content title="Vaccines" />
-        <Appbar.Action
-          icon="plus"
-          onPress={() => navigation.navigate('AddVaccineRegister')}
-        />
+        {baby ? (
+          <Appbar.Action
+            icon="plus"
+            onPress={() => navigation.navigate('AddVaccineRegister')}
+          />
+        ) : null}
         <Appbar.Action icon="calendar" onPress={showModalVaccines} />
       </Appbar.Header>
 
-      <View style={ContainerStyles.vaccinesContainer}>
-        <Text style={{textAlign: 'center'}} variant={'titleLarge'}>
-          {baby.name}
-        </Text>
-        <Text style={{textAlign: 'center'}} variant={'titleSmall'}>
-          {moment().diff(baby.birth, 'years') === 0
-            ? moment().diff(baby.birth, 'months') + ' months'
-            : moment().diff(baby.birth, 'years') + ' years'}
-        </Text>
-        <ListVaccinesRegistered
-          vaccines={vaccinesRegistered}
-          navigation={navigation}
-        />
-      </View>
+      {!baby ? (
+        <View style={[ContainerStyles.babyContainerEmpty]}>
+          <Text
+            variant="titleLarge"
+            style={[TextStyles.babyTitleEmpty, {color: colors.primary}]}>
+            No Vaccine Register
+          </Text>
+          <Text variant="titleMedium" style={[{color: colors.tertiary}]}>
+            Please add a baby first to add a vaccine register.
+          </Text>
+          <Button
+            mode={'contained'}
+            style={{marginTop: 20}}
+            onPress={() => {
+              navigation.navigate('AddBaby');
+            }}>
+            Add Baby
+          </Button>
+        </View>
+      ) : (
+        <View style={ContainerStyles.vaccinesContainer}>
+          <Text style={{textAlign: 'center'}} variant={'titleLarge'}>
+            {baby.name}
+          </Text>
+          <Text style={{textAlign: 'center'}} variant={'titleSmall'}>
+            {moment().diff(baby.birth, 'years') === 0
+              ? moment().diff(baby.birth, 'months') + ' months'
+              : moment().diff(baby.birth, 'years') + ' years'}
+          </Text>
+          <ListVaccinesRegistered
+            vaccines={vaccinesRegistered}
+            navigation={navigation}
+          />
+        </View>
+      )}
 
       <Portal>
         <Modal

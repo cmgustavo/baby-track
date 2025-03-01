@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import {View, ScrollView, Platform} from 'react-native';
 import {
-  Card,
   useTheme,
   IconButton,
   Text,
@@ -18,6 +17,8 @@ import {BabyObj} from '../store/babies/babies.models';
 import Welcome from '../components/welcome';
 import BabyGrowthCharts from '../components/baby-growth-charts';
 import {ContainerStyles, TextStyles} from '../styles';
+import {VaccineObj} from '../store/vaccines/vaccines.models.ts';
+import {AppointmentObj} from '../store/appointments/appointments.models.ts';
 
 const Home = ({navigation}) => {
   const {colors} = useTheme();
@@ -28,15 +29,17 @@ const Home = ({navigation}) => {
   const appointments = useAppSelector(
     ({APPOINTMENTS}: RootState) => APPOINTMENTS.appointments,
   );
-  const [hasAppointments, setHasAppointments] = useState<boolean>(
-    Object.keys(appointments).length > 0,
-  );
+  const [hasAppointments, setHasAppointments] = useState<boolean>(false);
 
+  const [lastAppointment, setLastAppointment] = useState<
+    AppointmentObj | undefined
+  >();
   const showLastAppointment = () => {
-    const lastAppointment = Object.values(appointments).reduce((a, b) =>
-      a.date > b.date ? a : b,
-    );
-    return lastAppointment;
+    const _latestAppointment = Object.values(appointments);
+    if (_latestAppointment.length === 0) {
+      return;
+    }
+    return _latestAppointment.reduce((a, b) => (a.date > b.date ? a : b));
   };
 
   const vaccines = useAppSelector(({VACCINES}: RootState) => VACCINES.vaccines);
@@ -44,10 +47,12 @@ const Home = ({navigation}) => {
     .filter(([_, value]) => value.babyId === Object.keys(babies)[0])
     .map(([_, value]) => value);
   const getLatestVaccine = () => {
-    if (babyVaccines.length === 0) return {};
+    if (babyVaccines.length === 0) {
+      return;
+    }
     return babyVaccines.reduce((a, b) => (a.date > b.date ? a : b));
   };
-  const [latestVaccine, setLatestVaccine] = useState(getLatestVaccine());
+  const [latestVaccine, setLatestVaccine] = useState<VaccineObj | undefined>();
 
   const formatData = data => {
     const entries = Object.values(data); // Convert object to array
@@ -72,6 +77,25 @@ const Home = ({navigation}) => {
       setLatestVaccine(getLatestVaccine());
     }
   }, [babies, appointments, vaccines]);
+
+  useEffect(() => {
+    if (babyVaccines) {
+      const _latestVaccine = getLatestVaccine();
+      if (_latestVaccine) {
+        setLatestVaccine(_latestVaccine);
+      }
+    }
+  }, [babyVaccines]);
+
+  useEffect(() => {
+    if (appointments) {
+      setHasAppointments(Object.keys(appointments).length > 0);
+      const _lastAppointment = showLastAppointment();
+      if (_lastAppointment) {
+        setLastAppointment(_lastAppointment);
+      }
+    }
+  }, [appointments]);
 
   return (
     <>
@@ -108,7 +132,7 @@ const Home = ({navigation}) => {
         </Menu>
       </Appbar.Header>
       <View style={[ContainerStyles.globalContainer]}>
-        {Object.entries(babies).length == 0 ? (
+        {Object.entries(babies).length === 0 ? (
           <Welcome navigation={navigation} />
         ) : (
           <ScrollView>
@@ -123,45 +147,47 @@ const Home = ({navigation}) => {
                 style={[TextStyles.homeSubtitle, {color: colors.secondary}]}>
                 {moment(baby?.birth).format('dddd, MMMM Do YYYY, H:mm')}
               </Text>
-              {hasAppointments ? (
+              {latestVaccine && (
+                <View style={ContainerStyles.lastAppointmentContainer}>
+                  <Text variant="titleMedium">Last vaccine</Text>
+                  <Text style={{marginBottom: 10}} variant="bodyLarge">
+                    {moment(latestVaccine.date).format('dddd, MMMM Do YYYY')}
+                  </Text>
+                  <Text variant="bodyMedium">{latestVaccine.name}</Text>
+                  <Text variant="bodyMedium">
+                    Dose: {latestVaccine.dosage.dose}
+                  </Text>
+                  <Text variant="bodyMedium">
+                    Stage: {latestVaccine.dosage.stage}
+                  </Text>
+                  <Text variant="bodyMedium">
+                    {latestVaccine.dosage.unique ? 'Unique' : 'Not unique'}
+                  </Text>
+                  <Text variant="bodyMedium">
+                    {latestVaccine.dosage.booster ? 'Booster' : 'Not booster'}
+                  </Text>
+                </View>
+              )}
+              {hasAppointments && lastAppointment ? (
                 <View>
                   <View style={ContainerStyles.lastAppointmentContainer}>
                     <Text variant="titleMedium">Last appointment</Text>
                     <Text style={{marginBottom: 10}} variant="bodyLarge">
-                      {moment(showLastAppointment().date).format(
+                      {moment(lastAppointment.date).format(
                         'dddd, MMMM Do YYYY',
                       )}
                     </Text>
                     <Text variant="bodyMedium">
-                      Age {showLastAppointment().age} months
+                      Age {lastAppointment.age} months
                     </Text>
                     <Text variant="bodyMedium">
-                      Length: {showLastAppointment().length} cm
+                      Length: {lastAppointment.length} cm
                     </Text>
                     <Text variant="bodyMedium">
-                      Weight: {showLastAppointment().weight} Kg
+                      Weight: {lastAppointment.weight} Kg
                     </Text>
                     <Text variant="bodyMedium">
-                      Head: {showLastAppointment().head} cm
-                    </Text>
-                  </View>
-                  <View style={ContainerStyles.lastAppointmentContainer}>
-                    <Text variant="titleMedium">Last vaccine</Text>
-                    <Text style={{marginBottom: 10}} variant="bodyLarge">
-                      {moment(latestVaccine.date).format('dddd, MMMM Do YYYY')}
-                    </Text>
-                    <Text variant="bodyMedium">{latestVaccine.name}</Text>
-                    <Text variant="bodyMedium">
-                      Dose: {latestVaccine.dosage.dose}
-                    </Text>
-                    <Text variant="bodyMedium">
-                      Stage: {latestVaccine.dosage.stage}
-                    </Text>
-                    <Text variant="bodyMedium">
-                      {latestVaccine.dosage.unique ? 'Unique' : 'Not unique'}
-                    </Text>
-                    <Text variant="bodyMedium">
-                      {latestVaccine.dosage.booster ? 'Booster' : 'Not booster'}
+                      Head: {lastAppointment.head} cm
                     </Text>
                   </View>
                   <Text style={{marginBottom: 20}} variant="titleMedium">
