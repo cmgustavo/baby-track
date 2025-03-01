@@ -67,7 +67,7 @@ const Preferences = ({navigation}) => {
           <List.Subheader>
             <Text variant="titleMedium">About</Text>
           </List.Subheader>
-          <List.Item title="Version" right={props => <Text>v1.0.1</Text>} />
+          <List.Item title="Version" right={props => <Text>v1.0.2</Text>} />
           <Divider />
         </List.Section>
       </View>
