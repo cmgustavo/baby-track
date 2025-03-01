@@ -9,6 +9,8 @@ import Appointments from '../screens/appointments';
 import Vaccines from '../screens/vaccines';
 import Preferences from '../screens/preferences';
 import AddVaccineRegister from '../screens/addVaccineRegister.tsx';
+import KitScreen from '../screens/kit.tsx';
+import AddMedicine from '../screens/addMedicine.tsx';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +30,8 @@ class MainNavigation extends React.PureComponent {
           name="AddVaccineRegister"
           component={AddVaccineRegister}
         />
+        <Stack.Screen name="KitScreen" component={KitScreen} />
+        <Stack.Screen name="AddMedicine" component={AddMedicine} />
         <Stack.Screen name="Preferences" component={Preferences} />
       </Stack.Navigator>
     );

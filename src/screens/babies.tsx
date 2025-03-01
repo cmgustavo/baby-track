@@ -15,7 +15,7 @@ import ErrorMessage from '../components/error';
 import ListBabies from '../components/list-babies';
 import {ContainerStyles, TextStyles} from '../styles';
 
-const Appointments = ({navigation}) => {
+const Babies = ({navigation}) => {
   const dispatch = useAppDispatch();
   const {colors} = useTheme();
   const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
@@ -73,4 +73,4 @@ const Appointments = ({navigation}) => {
   );
 };
 
-export default Appointments;
+export default Babies;

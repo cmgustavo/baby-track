@@ -25,12 +25,14 @@ import {
   VaccinesReducer,
   VaccinesReduxPersistBlackList,
 } from './vaccines/vaccines.reducer.ts';
+import {KitReducer, KitReduxPersistBlackList} from './kit/kit.reducer';
 
 const reducers = {
   APP: AppReducer,
   APPOINTMENTS: AppointmentsReducer,
   BABIES: BabiesReducer,
   VACCINES: VaccinesReducer,
+  KIT: KitReducer,
 };
 
 const storage = new MMKV();
@@ -55,6 +57,7 @@ const reducerPersistBlackLists: Record<keyof typeof reducers, string[]> = {
   APPOINTMENTS: AppointmentsReduxPersistBlackList,
   BABIES: BabiesReduxPersistBlackList,
   VACCINES: VaccinesReduxPersistBlackList,
+  KIT: KitReduxPersistBlackList,
 };
 
 const persistConfig = {

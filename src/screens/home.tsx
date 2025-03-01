@@ -123,6 +123,11 @@ const Home = ({navigation}) => {
             onPress={() => goTo('Vaccines')}
             title="Vaccines"
           />
+          <Menu.Item
+            leadingIcon={'medical-bag'}
+            onPress={() => goTo('KitScreen')}
+            title={'Medicine Kit'}
+          />
           <Divider />
           <Menu.Item
             leadingIcon={'cog'}
