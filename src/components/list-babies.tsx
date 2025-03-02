@@ -83,7 +83,11 @@ const ListBabies = ({babies, navigation}: Props) => {
             <Text variant="bodyLarge" style={{marginVertical: 10}}>
               More info
             </Text>
-            <Text variant="bodyMedium">DNI: {itemData.dni}</Text>
+            <Text variant="bodyMedium">ID: {key}</Text>
+            <Text variant="bodyMedium">
+              DNI:{' '}
+              {itemData.dni.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
+            </Text>
             <Text variant="bodyMedium">Gender: {itemData.gender}</Text>
             <Text variant="bodyMedium">Place: {itemData.place}</Text>
             <Text variant="bodyMedium">Mother: {itemData.mother}</Text>

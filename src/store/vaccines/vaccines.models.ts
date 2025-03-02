@@ -15,5 +15,4 @@ export type VaccineDosage = {
   dose: number;
   unique: boolean;
   booster: boolean;
-  stage: string;
 };

@@ -112,4 +112,19 @@ export const ContainerStyles = StyleSheet.create({
   kitCardsContent: {
     marginBottom: 30,
   },
+  vaccineContainer: {
+    flex: 1,
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+  vaccineContent: {
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  vaccineCardsContent: {
+    marginBottom: 30,
+  },
+  errorContainer: {
+    padding: 20,
+  },
 });

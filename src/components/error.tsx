@@ -14,13 +14,13 @@ const ErrorMessage = ({errorText1, errorText2}: Props) => {
   return (
     <View
       style={[
-        ContainerStyles.welcomeContainer,
+        ContainerStyles.errorContainer,
         {backgroundColor: colors.errorContainer},
       ]}>
-      <Text style={[TextStyles.errorTitle, {color: colors.onError}]}>
+      <Text style={[TextStyles.errorTitle, {color: colors.error}]}>
         {errorText1}
       </Text>
-      <Text style={[TextStyles.error, {color: colors.onError}]}>
+      <Text style={[TextStyles.error, {color: colors.error}]}>
         {errorText2}
       </Text>
     </View>

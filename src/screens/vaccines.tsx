@@ -80,14 +80,15 @@ const Vaccines = ({navigation}) => {
           </Button>
         </View>
       ) : (
-        <View style={ContainerStyles.vaccinesContainer}>
+        <View style={ContainerStyles.vaccineContainer}>
           <Text style={{textAlign: 'center'}} variant={'titleLarge'}>
             {baby.name}
           </Text>
           <Text style={{textAlign: 'center'}} variant={'titleSmall'}>
+            Age:
             {moment().diff(baby.birth, 'years') === 0
-              ? moment().diff(baby.birth, 'months') + ' months'
-              : moment().diff(baby.birth, 'years') + ' years'}
+              ? ' ' + moment().diff(baby.birth, 'months') + ' months'
+              : ' ' + moment().diff(baby.birth, 'years') + ' years'}
           </Text>
           <ListVaccinesRegistered
             vaccines={vaccinesRegistered}

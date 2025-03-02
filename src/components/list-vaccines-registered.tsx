@@ -4,7 +4,8 @@ import {useAppDispatch} from '../store';
 import {View, FlatList} from 'react-native';
 import moment from 'moment';
 import {VaccineObj} from '../store/vaccines/vaccines.models.ts';
-import {vaccineDeleteRegister} from "../store/vaccines";
+import {vaccineDeleteRegister} from '../store/vaccines';
+import {ContainerStyles} from '../styles';
 
 interface Props {
   navigation: any;
@@ -30,17 +31,17 @@ const ListVaccinesRegistered = ({vaccines, navigation}: Props) => {
 
   const _deleteVaccine = (id: string) => {
     dispatch(vaccineDeleteRegister(id));
-    navigation.goBack(2);
-  }
+  };
 
   const _renderItem = ({item}) => {
     const [key, itemData] = item;
     return (
       <Card
         mode="contained"
-        style={{
-          marginHorizontal: 10,
-        }}>
+        style={[
+          ContainerStyles.vaccineCardsContent,
+          {backgroundColor: colors.surfaceVariant},
+        ]}>
         <Card.Title
           titleNumberOfLines={2}
           titleVariant={'titleMedium'}
@@ -49,7 +50,7 @@ const ListVaccinesRegistered = ({vaccines, navigation}: Props) => {
           subtitle={moment(itemData.date).format('dddd, MMMM Do YYYY')}
           subtitleStyle={{color: colors.secondary}}
         />
-        <Card.Content>
+        <Card.Content style={[ContainerStyles.vaccineContent]}>
           <Text style={{marginVertical: 10}} variant={'titleMedium'}>
             Dosage
           </Text>
@@ -85,7 +86,7 @@ const ListVaccinesRegistered = ({vaccines, navigation}: Props) => {
   };
 
   return (
-    <View style={{marginVertical: 10}}>
+    <View style={[ContainerStyles.vaccineContainer]}>
       <FlatList data={vaccinesOrderedByDate} renderItem={_renderItem} />
     </View>
   );

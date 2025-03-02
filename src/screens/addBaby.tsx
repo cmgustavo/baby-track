@@ -36,7 +36,9 @@ const AddBaby = ({route, navigation}) => {
   const [birthValue, setBirthValue] = useState<Date>(
     birth ? new Date(birth) : new Date(),
   );
-  const [idValue, setIdValue] = useState<string>(id || '');
+  const [idValue, setIdValue] = useState<string | undefined>(
+    id || getUniqueId(),
+  );
   const [dniValue, setDniValue] = useState<string>(dni ? dni.toString() : '');
   const [nameValue, setNameValue] = useState<string>(name ? name : '');
   const [genderValue, setGenderValue] = useState<string>(
@@ -60,7 +62,7 @@ const AddBaby = ({route, navigation}) => {
   const IS_DEV = __DEV__;
 
   const _addBaby = (
-    _id: string,
+    _id: string | undefined,
     _dni: string,
     _name: string,
     _gender: string,
@@ -73,7 +75,7 @@ const AddBaby = ({route, navigation}) => {
     _pediatrician: string,
     _notes: string,
   ) => {
-    if (!_dni || !_name || !_birth) {
+    if (!_id || !_dni || !_name || !_birth) {
       setShowError(true);
       return;
     }
@@ -248,11 +250,8 @@ const AddBaby = ({route, navigation}) => {
             icon="content-save"
             mode="contained"
             style={{marginTop: 20}}
-            disabled={!dniValue}
+            disabled={!idValue || !dniValue || !nameValue || !birthValue}
             onPress={() => {
-              if (!idValue) {
-                setIdValue(getUniqueId());
-              }
               _addBaby(
                 idValue,
                 dniValue,

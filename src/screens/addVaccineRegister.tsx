@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, ScrollView} from 'react-native';
-import {useTheme, TextInput, Button, Appbar} from 'react-native-paper';
+import {
+  useTheme,
+  TextInput,
+  Button,
+  Appbar,
+  Text,
+  Switch,
+} from 'react-native-paper';
 import DatePicker from 'react-native-date-picker';
 import {Dropdown, Option} from 'react-native-paper-dropdown';
 
@@ -8,8 +15,7 @@ import {useAppDispatch, useAppSelector, RootState} from '../store';
 import {ContainerStyles} from '../styles';
 import ErrorMessage from '../components/error.tsx';
 import moment from 'moment/moment';
-import {dosageByVaccine, vaccinesConstantList} from '../constants/vaccines';
-import {VaccineDosage} from '../store/vaccines/vaccines.models.ts';
+import {vaccinesConstantList} from '../constants/vaccines';
 import {vaccineCreateRegister} from '../store/vaccines';
 
 const getUniqueId = () => {
@@ -22,83 +28,59 @@ const AddVaccineRegister = ({navigation}) => {
   const dispatch = useAppDispatch();
 
   const [showError, setShowError] = useState(false);
-  const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
-  const [babyIdValue, setBabyIdValue] = useState<string | undefined>(
-    Object.keys(babies)[0],
-  );
 
+  // Baby
+  const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
+  const [babyIdValue, setBabyIdValue] = useState<string | undefined>();
+  const [BABY_OPTIONS, setBABY_OPTIONS] = useState<Option[]>([]);
+
+  // Date and calendar
   const [dateValue, setDateValue] = useState<Date>(new Date());
-  const [textAreaValue, setTextAreaValue] = useState<string>('');
   const [openCalendar, setOpenCalendar] = useState(false);
 
-  const [selectedConstantVaccineId, setSelectedConstantVaccineId] = useState<
-    string | undefined
-  >('0');
-  const [selectedDosageVaccine, setSelectedDosageVaccine] = useState<
-    string | undefined
-  >('0');
+  // Extra fields
+  const [notesValue, setNotesValue] = useState<string>('');
 
-  const [listDosageVaccine, setListDosageVaccine] = useState<Option[]>();
-  const [dosageData, setDosageData] = useState<VaccineDosage>({});
-  const [vaccineName, setVaccineName] = useState<string>('');
+  // Dosage fields
+  const [ageValue, setAgeValue] = useState<number | undefined>();
+  const [doseValue, setDoseValue] = useState<number | undefined>();
+  const [uniqueValue, setUniqueValue] = useState(false);
+  const onToggleUniqueSwitch = () => setUniqueValue(!uniqueValue);
+  const [boosterValue, setBoosterValue] = useState(false);
+  const onToggleBoosterSwitch = () => setBoosterValue(!boosterValue);
 
-  const BABY_OPTIONS = Object.entries(babies).map(([_, value]) => ({
-    value: _,
-    label: value.name,
-  }));
-
+  // Vaccine name
   const CALENDAR_VACCINES_OPTIONS = Object.entries(vaccinesConstantList).map(
     ([id, value]) => ({
       value: id,
       label: value.name,
     }),
   );
+  const [vaccineIdValue, setVaccineIdValue] = useState<string | undefined>();
+  const [vaccineName, setVaccineName] = useState('');
 
   useEffect(() => {
-    const _filteredDosage = dosageByVaccine.filter(
-      d => d.vaccineId === Number(selectedConstantVaccineId),
-    );
-    const _filteredDosageObj = Object.entries(_filteredDosage).map(
-      ([id, value]) => ({
-        value: id,
-        label:
-          'Dose: ' +
-          value.dose +
-          ' - Stage: ' +
-          value.stage +
-          (value.booster ? ' - Boost' : ''),
-      }),
-    );
-    setListDosageVaccine(_filteredDosageObj);
-    setVaccineName(
-      vaccinesConstantList[Number(selectedConstantVaccineId)].name,
-    );
-  }, [selectedConstantVaccineId]);
-
-  useEffect(() => {
-    if (selectedDosageVaccine) {
-      const _dosage = dosageByVaccine.filter(
-        d => d.vaccineId === Number(selectedConstantVaccineId),
+    if (babies) {
+      setBABY_OPTIONS(
+        Object.entries(babies).map(([id, value]) => ({
+          value: id,
+          label: value.name,
+        })),
       );
-      const _selectedDosage = _dosage[Number(selectedDosageVaccine)];
-      setDosageData({
-        age: _selectedDosage.age,
-        dose: _selectedDosage.dose,
-        unique: _selectedDosage.unique,
-        booster: _selectedDosage.booster,
-        stage: _selectedDosage.stage,
-      });
+      // Select first baby by default
+      setBabyIdValue(Object.keys(babies)[0]);
     }
-  }, [selectedDosageVaccine, selectedConstantVaccineId]);
+  }, [babies]);
+
+  useEffect(() => {
+    if (vaccineIdValue) {
+      const _vaccineId = Number(vaccineIdValue);
+      setVaccineName(vaccinesConstantList[_vaccineId].name);
+    }
+  }, [vaccineIdValue]);
 
   const _saveVaccineRegister = () => {
-    if (
-      !babyIdValue ||
-      !vaccineName ||
-      !selectedConstantVaccineId ||
-      !selectedDosageVaccine ||
-      !dateValue
-    ) {
+    if (!babyIdValue || !vaccineName || !dateValue) {
       setShowError(true);
       setTimeout(() => {
         setShowError(false);
@@ -109,9 +91,14 @@ const AddVaccineRegister = ({navigation}) => {
       vaccineCreateRegister(getUniqueId(), {
         name: vaccineName,
         date: dateValue,
-        dosage: dosageData,
+        dosage: {
+          age: ageValue || 0,
+          dose: doseValue || 0,
+          unique: uniqueValue,
+          booster: boosterValue,
+        },
         babyId: babyIdValue,
-        notes: textAreaValue,
+        notes: notesValue,
       }),
     );
     navigation.goBack();
@@ -121,7 +108,7 @@ const AddVaccineRegister = ({navigation}) => {
     <>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Add Vaccine Register" />
+        <Appbar.Content title="Add Vaccine" />
         {IS_DEV && (
           <Appbar.Action
             icon="bug"
@@ -130,11 +117,13 @@ const AddVaccineRegister = ({navigation}) => {
                 .add(Math.random() * 100, 'days')
                 .toDate();
               setDateValue(randomDate);
-              const randomVaccineId = Math.floor(
-                Math.random() * CALENDAR_VACCINES_OPTIONS.length,
-              ).toString();
-              setSelectedConstantVaccineId(randomVaccineId);
-              setTextAreaValue(
+              const randomVaccine = Math.floor(Math.random() * 4).toString();
+              setVaccineIdValue(randomVaccine);
+              const randomAge = Math.floor(Math.random() * 50);
+              setAgeValue(randomAge);
+              const randomDose = Math.floor(Math.random() * 5);
+              setDoseValue(randomDose);
+              setNotesValue(
                 'Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
               );
             }}
@@ -159,6 +148,7 @@ const AddVaccineRegister = ({navigation}) => {
               onSelect={setBabyIdValue}
             />
           </View>
+          <Text variant={'titleSmall'}>Vaccine</Text>
           <TextInput
             style={[ContainerStyles.inputContainer]}
             mode="outlined"
@@ -190,33 +180,63 @@ const AddVaccineRegister = ({navigation}) => {
               label="Vaccine"
               placeholder="Select Vaccine"
               options={CALENDAR_VACCINES_OPTIONS}
-              value={selectedConstantVaccineId}
-              onSelect={setSelectedConstantVaccineId}
+              value={vaccineIdValue}
+              onSelect={setVaccineIdValue}
               mode={'outlined'}
               menuContentStyle={{backgroundColor: colors.background}}
               hideMenuHeader={true}
             />
           </View>
-          {listDosageVaccine && (
-            <View style={{marginBottom: 10}}>
-              <Dropdown
-                label="Dosage"
-                placeholder="Select Dosage"
-                options={listDosageVaccine}
-                value={selectedDosageVaccine}
-                onSelect={setSelectedDosageVaccine}
-                mode={'outlined'}
-                menuContentStyle={{backgroundColor: colors.background}}
-                hideMenuHeader={true}
-              />
-            </View>
-          )}
+          <Text variant={'titleSmall'}>Dosage</Text>
+          <TextInput
+            style={[ContainerStyles.inputContainer]}
+            mode="outlined"
+            label="Age (months)"
+            value={ageValue ? ageValue.toString() : ''}
+            onChangeText={v => setAgeValue(Number(v))}
+          />
+          <TextInput
+            style={[ContainerStyles.inputContainer]}
+            mode="outlined"
+            label="Dose"
+            value={doseValue ? doseValue.toString() : ''}
+            onChangeText={v => setAgeValue(Number(v))}
+          />
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingVertical: 16,
+              paddingLeft: 5,
+            }}>
+            <Text variant={'bodyMedium'} style={{fontWeight: 'bold'}}>
+              Unique
+            </Text>
+            <Switch value={uniqueValue} onValueChange={onToggleUniqueSwitch} />
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingVertical: 16,
+              paddingLeft: 5,
+            }}>
+            <Text variant={'bodyMedium'} style={{fontWeight: 'bold'}}>
+              Booster
+            </Text>
+            <Switch
+              value={boosterValue}
+              onValueChange={onToggleBoosterSwitch}
+            />
+          </View>
           <TextInput
             style={[ContainerStyles.inputContainer]}
             mode="outlined"
             label="Notes"
-            value={textAreaValue}
-            onChangeText={v => setTextAreaValue(v)}
+            value={notesValue}
+            onChangeText={v => setNotesValue(v)}
             multiline={true}
           />
           <Button
@@ -226,7 +246,7 @@ const AddVaccineRegister = ({navigation}) => {
             disabled={!babyIdValue || !dateValue}
             onPress={() => {
               _saveVaccineRegister();
-              setTextAreaValue('');
+              setNotesValue('');
             }}>
             Save
           </Button>
