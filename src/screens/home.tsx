@@ -39,7 +39,18 @@ const Home = ({navigation}) => {
     if (_latestAppointment.length === 0) {
       return;
     }
-    return _latestAppointment.reduce((a, b) => (a.date > b.date ? a : b));
+    // Check if there is an appointment with length, weight and head set
+    const _last = _latestAppointment.find(
+      appointment =>
+        appointment.length !== 0 &&
+        appointment.weight !== 0 &&
+        appointment.head !== 0,
+    );
+    if (!_last) {
+      return _latestAppointment.reduce((a, b) => (a.date > b.date ? a : b));
+    } else {
+      return _last;
+    }
   };
 
   const [nextAppointment, setNextAppointment] = useState<
@@ -73,9 +84,10 @@ const Home = ({navigation}) => {
   const [latestVaccine, setLatestVaccine] = useState<VaccineObj | undefined>();
 
   const formatData = data => {
-    const entries = Object.values(data); // Convert object to array
-    const sortedEntries = entries.sort((a, b) => a.age - b.age); // Sort by age
-
+    const entries = Object.values(data).filter(
+      entry => entry.length !== 0 && entry.weight !== 0 && entry.head !== 0,
+    );
+    const sortedEntries = entries.sort((a, b) => a.age - b.age);
     return {
       ages: sortedEntries.map(entry => entry.age),
       lengths: sortedEntries.map(entry => entry.length),
@@ -204,7 +216,7 @@ const Home = ({navigation}) => {
                     Dose: {latestVaccine.dosage.dose}
                   </Text>
                   <Text variant="bodyMedium">
-                    Stage: {latestVaccine.dosage.stage}
+                    Age: {latestVaccine.dosage.age} months
                   </Text>
                   <Text variant="bodyMedium">
                     {latestVaccine.dosage.unique ? 'Unique' : 'Not unique'}

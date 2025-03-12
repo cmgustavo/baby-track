@@ -58,7 +58,6 @@ const ListVaccinesRegistered = ({vaccines, navigation}: Props) => {
             Age (months): {itemData.dosage.age}
           </Text>
           <Text variant={'bodyMedium'}>Dose: {itemData.dosage.dose}</Text>
-          <Text variant={'bodyMedium'}>Stage: {itemData.dosage.stage}</Text>
           <Text variant={'bodyMedium'}>
             Unique: {itemData.dosage.unique ? 'Yes' : 'No'}
           </Text>
