@@ -39,17 +39,16 @@ const Home = ({navigation}) => {
     if (_latestAppointment.length === 0) {
       return;
     }
-    // Check if there is an appointment with length, weight and head set
-    const _last = _latestAppointment.find(
-      appointment =>
-        appointment.length !== 0 &&
-        appointment.weight !== 0 &&
-        appointment.head !== 0,
+    // Order by date by newest to oldest and get the first one
+    const _last = _latestAppointment.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
     );
     if (!_last) {
-      return _latestAppointment.reduce((a, b) => (a.date > b.date ? a : b));
+      return;
+    } else if (_last && (_last[0].length || _last[0].weight || _last[0].head)) {
+      return _last[0];
     } else {
-      return _last;
+      return _last[1];
     }
   };
 

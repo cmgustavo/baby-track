@@ -17,7 +17,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
   const dispatch = useAppDispatch();
   const _deleteAppointment = (id: string) => {
     dispatch(deleteAppointment(id));
-    navigation.goBack(2);
+    navigation.goBack();
   };
 
   const _modifyAppointment = (
@@ -118,7 +118,9 @@ const ListAppointments = ({appointments, navigation}: Props) => {
     <FlatList
       style={[ContainerStyles.appointmentContainer]}
       renderItem={_renderItem}
-      data={Object.entries(appointments).reverse()}
+      data={Object.entries(appointments).sort((a, b) => {
+        return new Date(b[1].date).getTime() - new Date(a[1].date).getTime();
+      })}
       keyExtractor={_keyExtractor}
     />
   );
