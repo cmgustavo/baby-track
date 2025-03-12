@@ -17,7 +17,7 @@ const AddMedicine = ({route, navigation}) => {
   const {
     id: idMedicine,
     name,
-    description,
+    dosage,
     quantity,
     expiration,
     notes,
@@ -31,9 +31,7 @@ const AddMedicine = ({route, navigation}) => {
   );
   const [idValue, setIdValue] = useState<string>(idMedicine || '');
   const [nameValue, setNameValue] = useState<string>(name ? name : '');
-  const [dosageValue, setDosageValue] = useState<string>(
-    description ? description : '',
-  );
+  const [dosageValue, setDosageValue] = useState<string>(dosage ? dosage : '');
   const [quantityValue, setQuantityValue] = useState<string>(
     quantity ? quantity.toString() : '',
   );
@@ -45,20 +43,20 @@ const AddMedicine = ({route, navigation}) => {
   const _addMedicine = (
     _id: string,
     _name: string,
-    _dosage: string,
-    _quantity: number,
-    _expiration: Date,
-    _notes: string,
+    _dosage?: string,
+    _quantity?: number,
+    _expiration?: Date,
+    _notes?: string,
   ) => {
-    if (!_name || !_dosage || !_quantity || !_expiration) {
+    if (!_name || !_id) {
       setShowError(true);
       setTimeout(() => {
         setShowError(false);
       }, 3000);
       return;
     }
+    const uniqueId = idMedicine ? idMedicine : getUniqueId();
 
-    const uniqueId = getUniqueId();
     dispatch(
       createMedicine(uniqueId, {
         name: _name,
@@ -143,13 +141,13 @@ const AddMedicine = ({route, navigation}) => {
           icon="content-save"
           mode="contained"
           style={{marginTop: 20}}
-          disabled={!idValue || !nameValue || !dosageValue || !quantityValue}
+          disabled={!idValue || !nameValue}
           onPress={() => {
             _addMedicine(
               idValue,
               nameValue,
               dosageValue,
-              parseInt(quantityValue, 10),
+              parseInt(quantityValue || '0', 10),
               expirationValue,
               textAreaValue,
             );

@@ -4,8 +4,8 @@ export type MedicalKitObj = {
 
 export type MedicineObj = {
   name: string;
-  dosage: string;
-  expiration: Date;
-  quantity: number;
+  dosage?: string;
+  expiration?: Date;
+  quantity?: number;
   notes?: string;
 };

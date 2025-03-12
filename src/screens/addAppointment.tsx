@@ -24,6 +24,7 @@ const AddAppointment = ({route, navigation}) => {
     weight,
     head,
     babyId,
+    hour,
   } = route.params || ({} as any);
   const dispatch = useAppDispatch();
   const babies = useAppSelector(({BABIES}: RootState) => BABIES.babies);
@@ -47,6 +48,7 @@ const AddAppointment = ({route, navigation}) => {
   const [headValue, setHeadValue] = useState<string>(
     head ? head.toString() : '',
   );
+  const [hourValue, setHourValue] = useState<string>(hour ? hour : '');
   const [showError, setShowError] = useState(false);
 
   const IS_DEV = __DEV__;
@@ -60,6 +62,7 @@ const AddAppointment = ({route, navigation}) => {
     _head: number,
     _babyId: string,
     _id?: string,
+    _hour?: string,
   ) => {
     if (!_babyId || !_date) {
       setShowError(true);
@@ -78,6 +81,7 @@ const AddAppointment = ({route, navigation}) => {
           weight: _weight,
           head: _head,
           babyId: _babyId,
+          hour: _hour,
         }),
       );
     } else {
@@ -91,6 +95,7 @@ const AddAppointment = ({route, navigation}) => {
           weight: _weight,
           head: _head,
           babyId: _babyId,
+          hour: _hour,
         }),
       );
     }
@@ -123,6 +128,7 @@ const AddAppointment = ({route, navigation}) => {
               setLenghtValue(randomLength.toString());
               setWeightValue(randomWeight.toString());
               setHeadValue(randomHead.toString());
+              setHourValue('15:15');
               setTextAreaValue('Notes');
               setBabyIdValue(babyIdValue);
             }}
@@ -175,6 +181,13 @@ const AddAppointment = ({route, navigation}) => {
           <TextInput
             style={[ContainerStyles.inputContainer]}
             mode="outlined"
+            label="Hour"
+            value={hourValue}
+            onChangeText={v => setHourValue(v)}
+          />
+          <TextInput
+            style={[ContainerStyles.inputContainer]}
+            mode="outlined"
             label="Age (Months)"
             value={ageValue}
             onChangeText={v => setAgeValue(v)}
@@ -223,6 +236,7 @@ const AddAppointment = ({route, navigation}) => {
                 Number(headValue),
                 babyIdValue,
                 idAppointment,
+                hourValue,
               );
               setTextAreaValue('');
             }}>

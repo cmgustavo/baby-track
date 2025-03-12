@@ -102,6 +102,10 @@ export const ContainerStyles = StyleSheet.create({
   lastAppointmentContainer: {
     marginBottom: 20,
   },
+  nextAppointmentContainer: {
+    marginBottom: 20,
+    padding: 15,
+  },
   kitContainer: {
     padding: 20,
   },

@@ -19,6 +19,18 @@ const ListKit = ({kit, navigation}: Props) => {
   const _deleteMedicine = (id: string) => {
     dispatch(deleteMedicine(id));
   };
+
+  const _modifyMedicine = (id: string) => {
+    navigation.navigate('AddMedicine', {
+      id,
+      name: kit[id].name,
+      dosage: kit[id].dosage,
+      quantity: kit[id].quantity,
+      expiration: kit[id].expiration,
+      notes: kit[id].notes,
+    });
+  };
+
   const _renderItem = ({item}) => {
     const [key, itemData] = item;
     return (
@@ -50,6 +62,14 @@ const ListKit = ({kit, navigation}: Props) => {
           </Text>
         </Card.Content>
         <Card.Actions>
+          <Button
+            textColor={colors.secondary}
+            mode={'text'}
+            icon={'trash-can-outline'}
+            onPress={() => _modifyMedicine(key)}>
+            Edit
+          </Button>
+
           <Button
             textColor={colors.error}
             mode={'text'}

@@ -29,6 +29,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
     weight: number,
     head: number,
     babyId: number,
+    hour: string,
   ) => {
     navigation.navigate('AddAppointment', {
       id,
@@ -39,6 +40,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
       weight,
       head,
       babyId,
+      hour,
     });
   };
   const _renderItem = ({item}) => {
@@ -58,6 +60,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
         />
         <Divider />
         <Card.Content style={[ContainerStyles.appointmentContent]}>
+          <Text variant="bodyMedium">Hour: {itemData.hour} hs.</Text>
           <Text variant="bodyLarge" style={{marginBottom: 5}}>
             Measurements
           </Text>
@@ -89,6 +92,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
                 itemData.weight,
                 itemData.head,
                 itemData.babyId,
+                itemData.hour,
               )
             }>
             Edit

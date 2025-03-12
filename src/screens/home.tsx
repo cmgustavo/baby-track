@@ -42,6 +42,24 @@ const Home = ({navigation}) => {
     return _latestAppointment.reduce((a, b) => (a.date > b.date ? a : b));
   };
 
+  const [nextAppointment, setNextAppointment] = useState<
+    AppointmentObj | undefined
+  >();
+  // Show next appointment if length, weight and head are not set
+  const showNextAppointment = () => {
+    const _nextAppointment = Object.values(appointments);
+    // check if there is an appointment with length, weight and head not set
+    const _next = _nextAppointment.find(
+      appointment =>
+        appointment.length === 0 ||
+        appointment.weight === 0 ||
+        appointment.head === 0,
+    );
+    if (_next) {
+      return _next;
+    }
+  };
+
   const vaccines = useAppSelector(({VACCINES}: RootState) => VACCINES.vaccines);
   const babyVaccines = Object.entries(vaccines)
     .filter(([_, value]) => value.babyId === Object.keys(babies)[0])
@@ -93,6 +111,10 @@ const Home = ({navigation}) => {
       const _lastAppointment = showLastAppointment();
       if (_lastAppointment) {
         setLastAppointment(_lastAppointment);
+      }
+      const _nextAppointment = showNextAppointment();
+      if (_nextAppointment) {
+        setNextAppointment(_nextAppointment);
       }
     }
   }, [appointments]);
@@ -152,6 +174,25 @@ const Home = ({navigation}) => {
                 style={[TextStyles.homeSubtitle, {color: colors.secondary}]}>
                 {moment(baby?.birth).format('dddd, MMMM Do YYYY, H:mm')}
               </Text>
+              {hasAppointments && nextAppointment ? (
+                <View
+                  style={[
+                    ContainerStyles.nextAppointmentContainer,
+                    {backgroundColor: colors.surfaceVariant, borderRadius: 10},
+                  ]}>
+                  <Text
+                    variant="titleMedium"
+                    style={{textAlign: 'center', marginBottom: 10}}>
+                    Next appointment
+                  </Text>
+                  <Text style={{marginBottom: 5}} variant="titleMedium">
+                    {moment(nextAppointment.date).format('dddd, MMMM Do YYYY')}
+                  </Text>
+                  <Text variant="bodyLarge">
+                    Time: {nextAppointment.hour} hs.
+                  </Text>
+                </View>
+              ) : null}
               {latestVaccine && (
                 <View style={ContainerStyles.lastAppointmentContainer}>
                   <Text variant="titleMedium">Last vaccine</Text>
