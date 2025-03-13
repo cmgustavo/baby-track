@@ -141,7 +141,7 @@ const AddMedicine = ({route, navigation}) => {
           icon="content-save"
           mode="contained"
           style={{marginTop: 20}}
-          disabled={!idValue || !nameValue}
+          disabled={!nameValue}
           onPress={() => {
             _addMedicine(
               idValue,

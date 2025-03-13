@@ -9,6 +9,8 @@ import {
   Menu,
   Divider,
   Appbar,
+  TouchableRipple,
+  Card,
 } from 'react-native-paper';
 
 import {useAppSelector, RootState} from '../store';
@@ -186,68 +188,104 @@ const Home = ({navigation}) => {
                 {moment(baby?.birth).format('dddd, MMMM Do YYYY, H:mm')}
               </Text>
               {hasAppointments && nextAppointment ? (
-                <View
+                <TouchableRipple
+                  onPress={() => goTo('Appointments')}
                   style={[
                     ContainerStyles.nextAppointmentContainer,
                     {backgroundColor: colors.surfaceVariant, borderRadius: 10},
                   ]}>
-                  <Text
-                    variant="titleMedium"
-                    style={{textAlign: 'center', marginBottom: 10}}>
-                    Next appointment
-                  </Text>
-                  <Text style={{marginBottom: 5}} variant="titleMedium">
-                    {moment(nextAppointment.date).format('dddd, MMMM Do YYYY')}
-                  </Text>
-                  <Text variant="bodyLarge">
-                    Time: {nextAppointment.hour} hs.
-                  </Text>
-                </View>
-              ) : null}
-              {latestVaccine && (
-                <View style={ContainerStyles.lastAppointmentContainer}>
-                  <Text variant="titleMedium">Last vaccine</Text>
-                  <Text style={{marginBottom: 10}} variant="bodyLarge">
-                    {moment(latestVaccine.date).format('dddd, MMMM Do YYYY')}
-                  </Text>
-                  <Text variant="bodyMedium">{latestVaccine.name}</Text>
-                  <Text variant="bodyMedium">
-                    Dose: {latestVaccine.dosage.dose}
-                  </Text>
-                  <Text variant="bodyMedium">
-                    Age: {latestVaccine.dosage.age} months
-                  </Text>
-                  <Text variant="bodyMedium">
-                    {latestVaccine.dosage.unique ? 'Unique' : 'Not unique'}
-                  </Text>
-                  <Text variant="bodyMedium">
-                    {latestVaccine.dosage.booster ? 'Booster' : 'Not booster'}
-                  </Text>
-                </View>
-              )}
-              {hasAppointments && lastAppointment ? (
-                <View>
-                  <View style={ContainerStyles.lastAppointmentContainer}>
-                    <Text variant="titleMedium">Last appointment</Text>
-                    <Text style={{marginBottom: 10}} variant="bodyLarge">
-                      {moment(lastAppointment.date).format(
+                  <View>
+                    <Text
+                      variant="titleMedium"
+                      style={{textAlign: 'center', marginBottom: 10}}>
+                      Next appointment
+                    </Text>
+                    <Text style={{marginBottom: 5}} variant="titleMedium">
+                      {moment(nextAppointment.date).format(
                         'dddd, MMMM Do YYYY',
                       )}
                     </Text>
-                    <Text variant="bodyMedium">
-                      Age {lastAppointment.age} months
-                    </Text>
-                    <Text variant="bodyMedium">
-                      Length: {lastAppointment.length} cm
-                    </Text>
-                    <Text variant="bodyMedium">
-                      Weight: {lastAppointment.weight} Kg
-                    </Text>
-                    <Text variant="bodyMedium">
-                      Head: {lastAppointment.head} cm
+                    <Text variant="bodyLarge">
+                      Time: {nextAppointment.hour} hs.
                     </Text>
                   </View>
-                  <Text style={{marginBottom: 20}} variant="titleMedium">
+                </TouchableRipple>
+              ) : null}
+              {latestVaccine && (
+                <Card
+                  style={[
+                    ContainerStyles.lastAppointmentContainer,
+                    {
+                      backgroundColor: colors.background,
+                    },
+                  ]}>
+                  <Card.Title
+                    title="Last Vaccine"
+                    subtitle={moment(latestVaccine.date).format(
+                      'dddd, MMMM Do YYYY',
+                    )}
+                  />
+                  <Card.Content>
+                    <Text variant="bodyLarge">{latestVaccine.name}</Text>
+                    <Text variant="bodyMedium">
+                      Dose: {latestVaccine.dosage.dose}
+                    </Text>
+                    <Text variant="bodyMedium">
+                      Age: {latestVaccine.dosage.age} months
+                    </Text>
+                    <Text variant="bodyMedium">
+                      {latestVaccine.dosage.unique ? 'Unique' : 'Not unique'}
+                    </Text>
+                    <Text variant="bodyMedium">
+                      {latestVaccine.dosage.booster ? 'Booster' : 'Not booster'}
+                    </Text>
+                  </Card.Content>
+                  <Card.Actions>
+                    <Button mode={'text'} onPress={() => goTo('Vaccines')}>
+                      See more
+                    </Button>
+                  </Card.Actions>
+                </Card>
+              )}
+              {hasAppointments && lastAppointment ? (
+                <View>
+                  <Card
+                    style={[
+                      ContainerStyles.lastAppointmentContainer,
+                      {
+                        backgroundColor: colors.background,
+                      },
+                    ]}>
+                    <Card.Title
+                      title="Last Appointment"
+                      subtitle={moment(lastAppointment.date).format(
+                        'dddd, MMMM Do YYYY',
+                      )}
+                    />
+                    <Card.Content>
+                      <Text variant="bodyMedium">
+                        Age {lastAppointment.age} months
+                      </Text>
+                      <Text variant="bodyMedium">
+                        Length: {lastAppointment.length} cm
+                      </Text>
+                      <Text variant="bodyMedium">
+                        Weight: {lastAppointment.weight} Kg
+                      </Text>
+                      <Text variant="bodyMedium">
+                        Head: {lastAppointment.head} cm
+                      </Text>
+                    </Card.Content>
+                    <Card.Actions>
+                      <Button
+                        mode={'text'}
+                        onPress={() => goTo('Appointments')}>
+                        See more
+                      </Button>
+                    </Card.Actions>
+                  </Card>
+                  <Divider />
+                  <Text style={{marginVertical: 20}} variant="titleMedium">
                     Growth graph
                   </Text>
                   <BabyGrowthCharts
