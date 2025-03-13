@@ -48,7 +48,7 @@ const AddMedicine = ({route, navigation}) => {
     _expiration?: Date,
     _notes?: string,
   ) => {
-    if (!_name || !_id) {
+    if (!_name) {
       setShowError(true);
       setTimeout(() => {
         setShowError(false);
