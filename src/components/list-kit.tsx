@@ -38,34 +38,33 @@ const ListKit = ({kit, navigation}: Props) => {
         mode="contained"
         style={[
           ContainerStyles.kitCardsContent,
-          {backgroundColor: colors.surfaceVariant},
+          {backgroundColor: colors.background},
         ]}>
         <Card.Title
           title={itemData.name}
-          titleStyle={{color: colors.primary}}
-          subtitle={
-            'Expires: ' +
-            moment(itemData.expiration).format('dddd, MMMM Do YYYY')
-          }
-          subtitleStyle={{color: colors.secondary}}
+          titleStyle={{fontWeight: 'bold'}}
+          subtitle={itemData.notes}
         />
         <Divider />
         <Card.Content style={[ContainerStyles.kitContent]}>
-          <Text variant="bodyMedium" style={{marginBottom: 5}}>
-            Dosage: {itemData.dosage}
-          </Text>
-          <Text variant="bodyMedium" style={{marginBottom: 5}}>
-            Quantity: {itemData.quantity}
-          </Text>
-          <Text variant="bodyMedium" style={{marginBottom: 5}}>
-            Notes: {itemData.notes}
-          </Text>
+          {itemData.dosage ? (
+            <Text variant="bodySmall">Dosage: {itemData.dosage}</Text>
+          ) : null}
+          {itemData.quantity ? (
+            <Text variant="bodySmall">Quantity: {itemData.quantity}</Text>
+          ) : null}
+          {itemData.expiration ? (
+            <Text variant="bodySmall">
+              Expires:{' '}
+              {moment(itemData.expiration).format('dddd, MMMM Do YYYY')}
+            </Text>
+          ) : null}
         </Card.Content>
         <Card.Actions>
           <Button
             textColor={colors.secondary}
             mode={'text'}
-            icon={'trash-can-outline'}
+            icon={'note-edit-outline'}
             onPress={() => _modifyMedicine(key)}>
             Edit
           </Button>

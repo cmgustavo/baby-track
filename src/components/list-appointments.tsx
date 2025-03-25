@@ -50,7 +50,7 @@ const ListAppointments = ({appointments, navigation}: Props) => {
         mode="contained"
         style={[
           ContainerStyles.appointmentCardsContent,
-          {backgroundColor: colors.surfaceVariant},
+          {backgroundColor: colors.background},
         ]}>
         <Card.Title
           title={moment(itemData.date).format('dddd, MMMM Do YYYY')}

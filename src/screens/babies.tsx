@@ -29,7 +29,7 @@ const Babies = ({navigation}) => {
     <>
       <Appbar.Header>
         <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Baby" />
+        <Appbar.Content title="Babies" />
       </Appbar.Header>
       <View style={[ContainerStyles.globalContainer]}>
         {!status ? (

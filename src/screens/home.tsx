@@ -183,9 +183,12 @@ const Home = ({navigation}) => {
                 {baby?.name}
               </Text>
               <Text
-                variant="bodyMedium"
+                variant="titleSmall"
                 style={[TextStyles.homeSubtitle, {color: colors.secondary}]}>
-                {moment(baby?.birth).format('dddd, MMMM Do YYYY, H:mm')}
+                Age:
+                {moment().diff(baby.birth, 'years') === 0
+                  ? ' ' + moment().diff(baby.birth, 'months') + ' months'
+                  : ' ' + moment().diff(baby.birth, 'years') + ' years'}
               </Text>
               {hasAppointments && nextAppointment ? (
                 <TouchableRipple
@@ -213,6 +216,8 @@ const Home = ({navigation}) => {
               ) : null}
               {latestVaccine && (
                 <Card
+                  mode={'contained'}
+                  onPress={() => goTo('Vaccines')}
                   style={[
                     ContainerStyles.lastAppointmentContainer,
                     {
@@ -221,35 +226,21 @@ const Home = ({navigation}) => {
                   ]}>
                   <Card.Title
                     title="Last Vaccine"
+                    titleStyle={{fontWeight: 'bold'}}
                     subtitle={moment(latestVaccine.date).format(
                       'dddd, MMMM Do YYYY',
                     )}
                   />
-                  <Card.Content>
+                  <Card.Content style={{alignSelf: 'center'}}>
                     <Text variant="bodyLarge">{latestVaccine.name}</Text>
-                    <Text variant="bodyMedium">
-                      Dose: {latestVaccine.dosage.dose}
-                    </Text>
-                    <Text variant="bodyMedium">
-                      Age: {latestVaccine.dosage.age} months
-                    </Text>
-                    <Text variant="bodyMedium">
-                      {latestVaccine.dosage.unique ? 'Unique' : 'Not unique'}
-                    </Text>
-                    <Text variant="bodyMedium">
-                      {latestVaccine.dosage.booster ? 'Booster' : 'Not booster'}
-                    </Text>
                   </Card.Content>
-                  <Card.Actions>
-                    <Button mode={'text'} onPress={() => goTo('Vaccines')}>
-                      See more
-                    </Button>
-                  </Card.Actions>
                 </Card>
               )}
               {hasAppointments && lastAppointment ? (
                 <View>
                   <Card
+                    onPress={() => goTo('Appointments')}
+                    mode={'contained'}
                     style={[
                       ContainerStyles.lastAppointmentContainer,
                       {
@@ -258,31 +249,25 @@ const Home = ({navigation}) => {
                     ]}>
                     <Card.Title
                       title="Last Appointment"
+                      titleStyle={{fontWeight: 'bold'}}
                       subtitle={moment(lastAppointment.date).format(
                         'dddd, MMMM Do YYYY',
                       )}
                     />
                     <Card.Content>
-                      <Text variant="bodyMedium">
+                      <Text variant="bodySmall">
                         Age {lastAppointment.age} months
                       </Text>
-                      <Text variant="bodyMedium">
+                      <Text variant="bodySmall">
                         Length: {lastAppointment.length} cm
                       </Text>
-                      <Text variant="bodyMedium">
+                      <Text variant="bodySmall">
                         Weight: {lastAppointment.weight} Kg
                       </Text>
-                      <Text variant="bodyMedium">
+                      <Text variant="bodySmall">
                         Head: {lastAppointment.head} cm
                       </Text>
                     </Card.Content>
-                    <Card.Actions>
-                      <Button
-                        mode={'text'}
-                        onPress={() => goTo('Appointments')}>
-                        See more
-                      </Button>
-                    </Card.Actions>
                   </Card>
                   <Divider />
                   <Text style={{marginVertical: 20}} variant="titleMedium">

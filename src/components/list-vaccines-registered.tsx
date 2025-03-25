@@ -40,7 +40,7 @@ const ListVaccinesRegistered = ({vaccines, navigation}: Props) => {
         mode="contained"
         style={[
           ContainerStyles.vaccineCardsContent,
-          {backgroundColor: colors.surfaceVariant},
+          {backgroundColor: colors.background},
         ]}>
         <Card.Title
           titleNumberOfLines={2}

@@ -61,7 +61,7 @@ const ListBabies = ({babies, navigation}: Props) => {
         mode="contained"
         style={[
           ContainerStyles.babyCardsContent,
-          {backgroundColor: colors.surfaceVariant},
+          {backgroundColor: colors.background},
         ]}>
         <Card.Title
           title={itemData.name}

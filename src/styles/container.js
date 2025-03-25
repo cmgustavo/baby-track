@@ -110,7 +110,7 @@ export const ContainerStyles = StyleSheet.create({
     padding: 20,
   },
   kitContent: {
-    flex: 1,
+    marginTop: 5,
     paddingHorizontal: 20,
   },
   kitCardsContent: {
