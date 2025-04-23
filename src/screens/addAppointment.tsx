@@ -64,7 +64,7 @@ const AddAppointment = ({route, navigation}) => {
     _id?: string,
     _hour?: string,
   ) => {
-    if (!_babyId || !_date) {
+    if (!_babyId || !_date || !_age) {
       setShowError(true);
       setTimeout(() => {
         setShowError(false);
@@ -225,7 +225,7 @@ const AddAppointment = ({route, navigation}) => {
             icon="content-save"
             mode="contained"
             style={{marginTop: 20}}
-            disabled={!babyIdValue || !dateValue}
+            disabled={!babyIdValue || !dateValue || !ageValue}
             onPress={() => {
               _addAppointment(
                 textAreaValue,

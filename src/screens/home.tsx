@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import moment from 'moment';
 import {View, ScrollView, Platform} from 'react-native';
 import {
@@ -58,7 +58,7 @@ const Home = ({navigation}) => {
     AppointmentObj | undefined
   >();
   // Show next appointment if length, weight and head are not set
-  const showNextAppointment = () => {
+  const showNextAppointment = useCallback(() => {
     const _nextAppointment = Object.values(appointments);
     // check if there is an appointment with length, weight and head not set
     const _next = _nextAppointment.find(
@@ -70,7 +70,7 @@ const Home = ({navigation}) => {
     if (_next) {
       return _next;
     }
-  };
+  }, [appointments]);
 
   const vaccines = useAppSelector(({VACCINES}: RootState) => VACCINES.vaccines);
   const babyVaccines = Object.entries(vaccines)
@@ -126,9 +126,7 @@ const Home = ({navigation}) => {
         setLastAppointment(_lastAppointment);
       }
       const _nextAppointment = showNextAppointment();
-      if (_nextAppointment) {
-        setNextAppointment(_nextAppointment);
-      }
+      setNextAppointment(_nextAppointment);
     }
   }, [appointments]);
 
