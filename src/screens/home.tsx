@@ -186,9 +186,9 @@ const Home = ({navigation}) => {
                 variant="titleSmall"
                 style={[TextStyles.homeSubtitle, {color: colors.secondary}]}>
                 Age:
-                {moment().diff(baby.birth, 'years') === 0
-                  ? ' ' + moment().diff(baby.birth, 'months') + ' months'
-                  : ' ' + moment().diff(baby.birth, 'years') + ' years'}
+                {moment().diff(baby?.birth, 'years') === 0
+                  ? ' ' + moment().diff(baby?.birth, 'months') + ' months'
+                  : ' ' + moment().diff(baby?.birth, 'years') + ' years'}
               </Text>
               {hasAppointments && nextAppointment ? (
                 <TouchableRipple
