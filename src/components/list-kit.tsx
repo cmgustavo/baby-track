@@ -45,7 +45,6 @@ const ListKit = ({kit, navigation}: Props) => {
           titleStyle={{fontWeight: 'bold'}}
           subtitle={itemData.notes}
         />
-        <Divider />
         <Card.Content style={[ContainerStyles.kitContent]}>
           {itemData.dosage ? (
             <Text variant="bodySmall">Dosage: {itemData.dosage}</Text>
@@ -59,6 +58,7 @@ const ListKit = ({kit, navigation}: Props) => {
               {moment(itemData.expiration).format('dddd, MMMM Do YYYY')}
             </Text>
           ) : null}
+          <Divider style={{marginTop: 10}} />
         </Card.Content>
         <Card.Actions>
           <Button

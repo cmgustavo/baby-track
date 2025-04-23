@@ -69,6 +69,36 @@ export const vaccinesConstantList = [
     description:
       "The meningococcal vaccine protects against Neisseria meningitidis, which can cause meningitis and bloodstream infections. Different versions cover different strains (A, B, C, W, Y), and it is administered according to the child's age and risk factors.",
   },
+  {
+    name: 'Tétano (Tetanus Vaccine)',
+    description:
+      'The tetanus vaccine protects against tetanus, a serious bacterial infection that affects the nervous system. It is usually given as part of the DTPa vaccine (diphtheria, tetanus, and pertussis) during childhood and as booster doses in adulthood.',
+  },
+  {
+    name: 'Fiebre Amarilla (Yellow Fever Vaccine)',
+    description:
+      'The yellow fever vaccine protects against yellow fever, a viral disease transmitted by mosquitoes. It is recommended for people living in or traveling to endemic areas and is usually given as a single dose.',
+  },
+  {
+    name: 'Hepatitis A',
+    description:
+      'The Hepatitis A vaccine protects against the Hepatitis A virus, which causes liver inflammation, fever, jaundice, and digestive issues. It is especially recommended in areas with poor sanitation or for travel to such regions. The vaccine is given in two doses, typically starting after 12 months of age.',
+  },
+  {
+    name: 'MMR - Measles, Mumps, Rubella (Triple Viral)',
+    description:
+      'The MMR vaccine protects against three viral diseases: Measles, Mumps, and Rubella (German measles). Measles causes fever, rash, and can lead to serious complications like pneumonia and encephalitis. Mumps causes swelling of the salivary glands, fever, and can lead to meningitis or infertility. Rubella is usually mild but dangerous during pregnancy due to the risk of congenital rubella syndrome. It is given in two doses, usually starting at 12 months of age.',
+  },
+  {
+    name: 'Varicela (Chickenpox)',
+    description:
+      'The varicella vaccine protects against chickenpox, a highly contagious virus that causes itchy skin rash, fever, and fatigue. Although often mild, complications can include skin infections and pneumonia. The vaccine is usually given in two doses, starting after the first year of life.',
+  },
+  {
+    name: 'Influenza (Flu Vaccine)',
+    description:
+      'The influenza vaccine protects against seasonal flu viruses. It is recommended annually, especially for high-risk groups like infants, elderly individuals, and those with chronic health conditions. The vaccine can be given as an injection or nasal spray.',
+  },
 ];
 
 export const dosageByVaccine = [

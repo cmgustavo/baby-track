@@ -7,7 +7,6 @@ import {
   Text,
   Button,
 } from 'react-native-paper';
-import moment from 'moment';
 
 import {ContainerStyles, TextStyles} from '../styles';
 
@@ -81,15 +80,6 @@ const Vaccines = ({navigation}) => {
         </View>
       ) : (
         <View style={ContainerStyles.vaccineContainer}>
-          <Text style={{textAlign: 'center'}} variant={'titleLarge'}>
-            {baby.name}
-          </Text>
-          <Text style={{textAlign: 'center'}} variant={'titleSmall'}>
-            Age:
-            {moment().diff(baby.birth, 'years') === 0
-              ? ' ' + moment().diff(baby.birth, 'months') + ' months'
-              : ' ' + moment().diff(baby.birth, 'years') + ' years'}
-          </Text>
           <ListVaccinesRegistered
             vaccines={vaccinesRegistered}
             navigation={navigation}

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useTheme, Text, Card, Button} from 'react-native-paper';
+import {useTheme, Text, Card, Button, Divider} from 'react-native-paper';
 import {useAppDispatch} from '../store';
 import {View, FlatList} from 'react-native';
 import moment from 'moment';
@@ -67,7 +67,8 @@ const ListVaccinesRegistered = ({vaccines, navigation}: Props) => {
           <Text style={{marginVertical: 10}} variant={'titleMedium'}>
             Notes
           </Text>
-          <Text>{itemData.notes}</Text>
+          <Text style={{marginBottom: 10}}>{itemData.notes}</Text>
+          <Divider />
         </Card.Content>
         <Card.Actions>
           <Button

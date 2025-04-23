@@ -58,24 +58,19 @@ const ListAppointments = ({appointments, navigation}: Props) => {
           subtitle={`Age: ${itemData.age} months`}
           subtitleStyle={{color: colors.secondary}}
         />
-        <Divider />
         <Card.Content style={[ContainerStyles.appointmentContent]}>
-          <Text variant="bodyMedium">Hour: {itemData.hour} hs.</Text>
-          <Text variant="bodyLarge" style={{marginBottom: 5}}>
-            Measurements
-          </Text>
           <Text variant="bodyMedium">Length: {itemData.length} cm</Text>
           <Text variant="bodyMedium">Weight: {itemData.weight} g</Text>
-          <Text variant="bodyMedium" style={{marginBottom: 10}}>
+          <Text variant="bodyMedium" style={{marginVertical: 10}}>
             Head: {itemData.head} cm
           </Text>
-          <Divider />
-          <Text variant="bodyLarge" style={{marginTop: 10, marginBottom: 5}}>
-            Notes
-          </Text>
-          <Text variant="bodyMedium" numberOfLines={2}>
+          <Text
+            style={{marginBottom: 10}}
+            variant="bodyMedium"
+            numberOfLines={2}>
             {itemData.notes}
           </Text>
+          <Divider />
         </Card.Content>
         <Card.Actions>
           <Button
